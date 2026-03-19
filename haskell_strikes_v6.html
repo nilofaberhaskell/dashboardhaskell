@@ -1,0 +1,366 @@
+
+<style>
+:root{--hk:#2B6E4E;--hk-d:#1E5038;--hk-l:#EAF4EE;--hk-t:#1A2E23;--hk-mu:#6B8C7A;--hk-b:#D0E6D9;--w:#fff;--bg:#F7FAF8;}
+*{box-sizing:border-box;margin:0;padding:0;}
+.header{background:var(--hk);padding:14px 20px;display:flex;align-items:center;gap:14px;}
+.header img{height:52px;width:auto;object-fit:contain;border-radius:4px;}
+.header h1{font-size:17px;font-weight:400;color:#fff;font-family:Georgia,serif;}
+.header p{font-size:11px;color:rgba(255,255,255,.6);margin-top:2px;font-family:Georgia,serif;}
+.body{padding:16px 20px;background:var(--bg);}
+.metrics{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:14px;}
+.mc{background:var(--w);border:1px solid var(--hk-b);border-radius:8px;padding:11px 13px;}
+.ml{font-size:10px;color:var(--hk-mu);text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px;font-family:Georgia,serif;}
+.mv{font-size:22px;font-weight:400;font-family:Georgia,serif;}
+.mv.t{color:var(--hk-d)}.mv.s1{color:#D97706}.mv.s2{color:#C2410C}.mv.s3{color:#DC2626}.mv.sc{color:#6B8C7A}
+.frow{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap;}
+.fl{font-size:11px;color:var(--hk-mu);font-family:Georgia,serif;white-space:nowrap;}
+.msw{position:relative;flex:1;max-width:360px;}
+.mst{background:var(--w);border:1px solid var(--hk-b);border-radius:8px;padding:7px 10px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;min-height:36px;font-size:12px;color:var(--hk-t);font-family:Georgia,serif;user-select:none;}
+.mst:hover{border-color:var(--hk);}
+.mst.open .arr{transform:rotate(180deg);}
+.arr{font-size:9px;color:var(--hk-mu);transition:transform .2s;flex-shrink:0;}
+.mst-txt{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;}
+.msd{display:none;position:absolute;top:calc(100% + 4px);left:0;right:0;background:var(--w);border:1px solid var(--hk-b);border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,.08);z-index:100;max-height:240px;overflow-y:auto;}
+.msd.open{display:block;}
+.mso{display:flex;align-items:center;gap:8px;padding:8px 10px;cursor:pointer;font-size:12px;color:var(--hk-t);font-family:Georgia,serif;}
+.mso:hover,.mso.sel{background:var(--hk-l);}
+.mck{width:13px;height:13px;border:1.5px solid var(--hk-b);border-radius:3px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.mso.sel .mck{background:var(--hk);border-color:var(--hk);}
+.mso.sel .mck::after{content:'✓';font-size:8px;color:#fff;}
+.ms-div{border:none;border-top:1px solid var(--hk-b);margin:3px 0;}
+.ms-all{font-style:italic;color:var(--hk-mu);}
+.si{background:var(--w);border:1px solid var(--hk-b);border-radius:8px;padding:7px 10px;font-size:12px;color:var(--hk-t);min-width:160px;font-family:Georgia,serif;outline:none;}
+.si:focus{border-color:var(--hk);}
+.si::placeholder{color:var(--hk-mu);}
+.ftabs{display:flex;gap:6px;}
+.ftab{padding:5px 12px;border-radius:999px;font-size:11px;border:1px solid var(--hk-b);cursor:pointer;background:var(--w);color:var(--hk-mu);font-family:Georgia,serif;}
+.ftab.active{background:var(--hk);color:#fff;border-color:var(--hk);}
+.lay{display:grid;grid-template-columns:1fr 230px;gap:12px;}
+.panel{background:var(--w);border:1px solid var(--hk-b);border-radius:8px;overflow:hidden;}
+.ph{background:var(--hk);padding:10px 14px;display:flex;justify-content:space-between;align-items:center;}
+.ph-t{font-size:12px;color:rgba(255,255,255,.9);font-family:Georgia,serif;}
+.cp{font-size:10px;background:rgba(255,255,255,.18);color:#fff;padding:2px 8px;border-radius:999px;font-family:Georgia,serif;}
+.tbl{width:100%;border-collapse:collapse;}
+.tbl thead th{font-size:10px;text-transform:uppercase;letter-spacing:.6px;color:var(--hk-mu);padding:7px 12px;text-align:left;border-bottom:1px solid var(--hk-b);background:var(--bg);font-family:Georgia,serif;font-weight:400;}
+.tbl tbody tr{border-bottom:1px solid var(--hk-b);}
+.tbl tbody tr:last-child{border-bottom:none;}
+.tbl tbody tr:hover{background:var(--hk-l);}
+.tbl td{padding:7px 12px;font-size:12px;color:var(--hk-t);font-family:Georgia,serif;vertical-align:middle;}
+.tbl td.ln{max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.tbl td.dn{font-size:10px;color:var(--hk-mu);}
+.sl{max-height:400px;overflow-y:auto;}
+.tp{display:inline-block;font-size:10px;padding:2px 7px;border-radius:999px;}
+.tp-p{background:#E8F4FE;color:#1E4D7B;}
+.tp-h{background:#EDE8FE;color:#4C1D95;}
+.tp-o{background:var(--hk-l);color:var(--hk-d);}
+.sb{display:inline-block;font-size:10px;padding:2px 8px;border-radius:999px;font-family:Georgia,serif;white-space:nowrap;}
+.sb1{background:#FFFBEB;color:#92400E;border:1px solid #FDE68A;}
+.sb2{background:#FFF3ED;color:#9A3412;border:1px solid #FDBA74;}
+.sb3{background:#FEF2F2;color:#991B1B;border:1px solid #FCA5A5;}
+.sb0{background:#F1F5F3;color:#6B8C7A;border:1px solid #C4D9CE;}
+.empty{padding:28px;text-align:center;font-size:12px;color:var(--hk-mu);font-style:italic;font-family:Georgia,serif;}
+.cw{padding:12px 14px;}
+.leg{display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap;}
+.li{display:flex;align-items:center;gap:4px;font-size:10px;color:var(--hk-mu);font-family:Georgia,serif;}
+.ld{width:10px;height:10px;border-radius:2px;}
+.bi{margin-bottom:8px;}
+.bd{font-size:10px;color:var(--hk-t);margin-bottom:3px;font-family:Georgia,serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.br{display:flex;align-items:center;gap:3px;height:14px;}
+.bs{height:14px;min-width:2px;border-radius:2px;}
+.bs1{background:#F59E0B;}.bs2{background:#EA580C;}.bs3{background:#DC2626;}.bsc{background:#C4D9CE;}
+.bt{font-size:10px;color:var(--hk-mu);margin-left:3px;font-family:Georgia,serif;}
+</style>
+
+<div style="background:var(--w);">
+<div class="header">
+  <img src="https://acdn-us.mitiendanube.com/stores/001/154/387/themes/common/logo-668637200-1716559383-ce2ff7c48eefb1a2e2e8fca4eb8956c51716559384-320-0.webp" alt="Haskell">
+  <div>
+    <h1>Haskell Cosméticos</h1>
+    <p>Monitoramento de Strikes</p>
+  </div>
+</div>
+
+<div class="body">
+  <div class="metrics" id="metrics"></div>
+  <div class="frow">
+    <span class="fl">Distribuidor:</span>
+    <div class="msw">
+      <div class="mst" id="mst" onclick="toggleDD()">
+        <span class="mst-txt" id="msl">Todos</span>
+        <span class="arr">▼</span>
+      </div>
+      <div class="msd" id="msd"></div>
+    </div>
+    <input class="si" id="srch" type="text" placeholder="Buscar loja..." oninput="render()">
+    <div class="ftabs">
+      <button class="ftab active" id="tab-all" onclick="setTab('all')">Todos</button>
+      <button class="ftab" id="tab-active" onclick="setTab('active')">Ativos</button>
+      <button class="ftab" id="tab-cancel" onclick="setTab('cancel')">Cancelados</button>
+    </div>
+  </div>
+  <div class="lay">
+    <div class="panel">
+      <div class="ph"><span class="ph-t">Lojas</span><span class="cp" id="cbadge">0</span></div>
+      <div class="sl" id="slist"></div>
+    </div>
+    <div class="panel">
+      <div class="ph"><span class="ph-t">Strikes por distribuidor</span></div>
+      <div class="cw">
+        <div class="leg">
+          <span class="li"><span class="ld" style="background:#F59E0B"></span>Strike 1</span>
+          <span class="li"><span class="ld" style="background:#EA580C"></span>Strike 2</span>
+          <span class="li"><span class="ld" style="background:#DC2626"></span>Strike 3+</span>
+          <span class="li"><span class="ld" style="background:#C4D9CE"></span>Cancelado</span>
+        </div>
+        <div id="bchart"></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+const raw=[
+["ok","Linhares","Bonnie Cosméticos","puro",1,false],
+["ok","Comercial Nader","Gêmeas Cosméticos SP","híbrido",1,false],
+["ok","BL","Loja Dibelleza","puro",1,false],
+["ok","Acri","Sra. Cosméticos","próprio",1,false],
+["ok","Linhares","Stark Commerce","puro",1,false],
+["ok","Acri","Luna Cosméticos","puro",1,false],
+["ok","MF Queiroz","Voltforce","puro",1,false],
+["ok","Vi Beleza","Conceito Cosméticos","puro",1,false],
+["ok","Vi Beleza","Itabella Shop","puro",1,false],
+["ok","Linhares","Sua Beleza Digital","puro",1,false],
+["ok","Comercial Nader","Brilho Cosméticos","híbrido",1,false],
+["ok","MF Queiroz","Lourenceti dos Santos","puro",1,false],
+["ok","Siqueira","Ela Precisa","puro",1,false],
+["ok","Maninho","Arthena","puro",1,false],
+["ok","Acri","Luna Cosméticos","puro",1,false],
+["ok","Linhares","On Beauty","puro",1,false],
+["ok","RC Toledo","Rotha Cosméticos","próprio",1,false],
+["ok","RC Toledo","Bemstor","puro",1,false],
+["ok","Triângulo das Gerais","Bem Beleza","híbrido",1,false],
+["ok","Beleza Brasileira","Sunset Cosméticos","puro",1,false],
+["ok","Maninho","Lupi Cosméticos","puro",1,false],
+["ok","DMC","Glow To Go","próprio",1,false],
+["ok","Maninho","Produtinhos da Margot","puro",1,false],
+["ok","Maninho","Anne Cosméticos","puro",1,false],
+["ok","Linhares","Syng Beauty","puro",1,false],
+["ok","GPS","HT Imports & Cosméticos","puro",1,false],
+["ok","2 Irmãos","Tudão Tech","puro",1,false],
+["ok","Acri","Rei Shop","puro",1,false],
+["ok","BL","Drogaria Wancley","híbrido",1,false],
+["ok","Siqueira","Lojas Rede","híbrido",1,false],
+["ok","Linhares","Doce Beleza","puro",1,false],
+["ok","Linhares","Perfumaria Comércio","puro",1,false],
+["ok","Promove","MS Cosméticos","híbrido",1,false],
+["ok","Linhares","Nika Perfumaria","híbrido",1,false],
+["ok","BL","Loja Dibelleza","puro",1,false],
+["ok","Linhares","Evas Perfumaria","híbrido",1,false],
+["ok","BL","Drogaria Wancley","híbrido",1,false],
+["ok","Linhares","Perfumaria Comércio","puro",2,false],
+["ok","Linhares","Nika Perfumaria","híbrido",1,false],
+["ok","Cosminas","Ísis Cosmética","puro",1,false],
+["ok","Siqueira","Anamel Oficial","puro",1,false],
+["ok","Linhares","On Beauty","puro",2,false],
+["ok","T&T","Raiz Doce","puro",1,false],
+["ok","Maninho","Lupi Cosméticos","puro",2,false],
+["ok","2 Irmãos","HT Imports & Cosméticos","puro",2,false],
+["ok","Siqueira","Lojas Rede","híbrido",2,false],
+["ok","Linhares","Beleza Global","puro",1,false],
+["ok","Triângulo das Gerais","Bem Beleza","híbrido",2,false],
+["ok","2 Irmãos","Cida Cosméticos","híbrido",1,false],
+["ok","Vi Beleza","Droga Mult (Mult Farma)","híbrido",1,false],
+["ok","2 Irmãos","VÊNUS DISTRIBUIDORA","puro",1,false],
+["ok","2 Irmãos","Tudão Tech","puro",1,false],
+["ok","Acri","Sra. Cosméticos","próprio",2,false],
+["ok","Linhares","Zanibel Modas","puro",1,false],
+["ok","Acri","Vivalife","puro",1,false],
+["ok","Linhares","SAMYRA COSMETICOS","puro",1,false],
+["ok","Linhares","Campfashion Distribuidora","híbrido",1,false],
+["ok","MF Queiroz","Elis Cosméticos","puro",1,false],
+["ok","2 Irmãos","Lojas Inova","híbrido",1,false],
+["ok","Natabrasilis","Nevita Cosméticos","puro",1,false],
+["ok","BL","Drogaria Wancley","híbrido",1,false],
+["ok","Linhares","On Beauty","puro",2,false],
+["ok","MF Queiroz","Lojas Lívia","puro",1,false],
+["ok","Siqueira","Mah Beauty","puro",1,false],
+["ok","Lopes","EmyTê Cosméticos","puro",1,false],
+["ok","ETNA","Pai D'égua Cosméticos","híbrido",1,false],
+["ok","Linhares","Madame Margo","híbrido",1,false],
+["ok","BL","Loja Dibelleza","puro",3,false],
+["ok","Comercial Nader","Diva Cosméticos","híbrido",1,false],
+["ok","Comercial Nader","Gêmeas Cosméticos SP","híbrido",2,false],
+["ok","Maninho","Lupi Cosméticos","puro",2,false],
+["ok","T&T","Raiz Doce","puro",2,false],
+["ok","Promove","Rio Belleza","híbrido",1,false],
+["ok","Triângulo das Gerais","Bem Beleza","híbrido",2,false],
+["ok","Comercial Nader","Casa Costa Cosméticos Batel","híbrido",1,false],
+["ok","Comercial Nader","Brilho Cosméticos","híbrido",2,false],
+["ok","Siqueira","Lojas Rede","híbrido",3,false],
+["ok","Linhares","Evas Perfumaria","híbrido",2,false],
+["ok","2 Irmãos","Tudão Tech","puro",2,false],
+["ok","Comercial Nader","Casa Costa Cosméticos Batel","híbrido",1,false],
+["ok","ADL","Camala Cosméticos","próprio",1,false],
+["ok","MF Queiroz","Lourenceti dos Santos","puro",2,false],
+["ok","Vi Beleza","Nutrisy","puro",1,false],
+["ok","Linhares","Skin Dermo","puro",1,false],
+["ok","Linhares","Beleza Global","puro",2,false],
+["ok","Siqueira","Lojas Rede","híbrido",3,false],
+["ok","Linhares","Evas Perfumaria","híbrido",2,false],
+["ok","Linhares","Cigana Beleza","híbrido",1,false],
+["Cancelado","Triângulo das Gerais","Bem Beleza","híbrido",3,true],
+["ok","Promove","Brulaine","híbrido",1,false],
+["ok","Comercial Nader","Casa Costa Cosméticos Batel","híbrido",1,false],
+["Cancelado","ADL","Camala Cosméticos","próprio",1,true],
+["ok","2 Irmãos","Cida Cosméticos","híbrido",2,false],
+["ok","T&T","Topo LTDA","puro",1,false],
+["ok","Conceito","Don PTK","puro",1,false],
+["ok","Siqueira","Ela Precisa","puro",2,false],
+["ok","Linhares","Na Beleza Cosméticos","puro",1,false],
+["ok","Maninho","Luz Make Up","puro",1,false],
+["ok","Linhares","Syng Beauty","puro",2,false],
+["ok","Linhares","Beleza na Rede","puro",1,false],
+["ok","Comercial Nader","Diva Cosméticos","puro",2,false],
+["ok","Linhares","Skin Dermo","puro",2,false],
+["ok","Linhares","Aika","puro",1,false],
+["ok","Linhares","Beleza Global","puro",3,false],
+["ok","Linhares","Bonnie Cosméticos","puro",2,false],
+["ok","2 Irmãos","Cida Cosméticos","híbrido",2,false],
+["ok","Linhares","Doce Beleza","puro",2,false],
+["ok","Conceito","Don PTK","puro",2,false],
+["ok","Siqueira","Imporium Sempre Bela","puro",1,false],
+["ok","2 Irmãos","Lojas Inova","híbrido",2,false],
+["ok","Cosminas","Ísis Cosmética","puro",2,false],
+["ok","Natabrasilis","Khay Up","híbrido",1,false],
+["ok","Crismell","LaBella Comércio","puro",1,false],
+["ok","DMC","Lojas da Vivi","híbrido",1,false],
+["ok","Linhares","Lunna Beauty","puro",1,false],
+["ok","Vi Beleza","Império Shop","puro",1,false],
+["ok","Linhares","Na Beleza Cosméticos","puro",1,false],
+["ok","Comercial Nader","Segredo da Beleza","híbrido",1,false],
+["ok","Triângulo das Gerais","Reinventar","puro",1,false],
+["ok","Maninho","Luz Make Up","puro",2,false],
+["ok","Comercial Nader","Segredo da Beleza","híbrido",1,false],
+["ok","Natumix","Multicores","puro",1,false],
+["ok","Beleza Brasileira","Sunset Cosméticos","puro",2,false],
+["ok","Linhares","Doce Beleza","puro",3,false],
+["ok","Vi Beleza","Itabella Shop","puro",1,false],
+["ok","Comercial Nader","Diva Cosméticos","híbrido",3,false],
+["ok","Vi Beleza","Império Shop","puro",2,false],
+["ok","Comercial Nader","Segredo da Beleza","híbrido",3,false],
+["ok","Linhares","Evas Perfumaria","híbrido",3,false],
+["ok","Linhares","Beleza na Rede","puro",2,false],
+["ok","RC Toledo","Rotha Cosméticos","próprio",2,false],
+["ok","MF Queiroz","Itufarma","híbrido",1,false],
+["Cancelado","ADL","Camala Cosméticos","próprio",1,true],
+["ok","Acri","Luna Cosméticos","puro",2,false],
+["ok","MF Queiroz","Voltforce","puro",2,false],
+["ok","Acri","Vivalie","puro",2,false],
+["ok","Linhares","Na Beleza Cosméticos","puro",2,false],
+["ok","Linhares","Perfumaria Comércio","puro",3,false],
+["ok","MF Queiroz","Lourenceti dos Santos","puro",3,false],
+["ok","RC Toledo","Save Cuidados","puro",1,false],
+["ok","Linhares","Lunna Beauty","puro",2,false],
+["ok","MF Queiroz","Lourenceti dos Santos","puro",3,false],
+["ok","Gel Distribuidora","to na web","próprio",1,false],
+["ok","RC Toledo","Save Cuidados","puro",2,false],
+["ok","Linhares","Lunna Beauty","puro",3,false],
+["ok","DMC","Glow To Go","próprio",2,false],
+["ok","Triângulo das Gerais","Bem Beleza","puro",3,false],
+["ok","Acri","Luna Cosméticos","puro",3,false],
+["Cancelado","ADL","Camala Cosméticos","próprio",2,true],
+["ok","Siqueira","Anamel Oficial","puro",1,false],
+["ok","Vi Beleza","Conceito Cosméticos","puro",1,false],
+["ok","Vi Beleza","Droga Mult (Mult Farma)","híbrido",1,false],
+["ok","RC Toledo","Save Cuidados","puro",2,false],
+["ok","RC Toledo","Rotha Cosméticos","próprio",3,false],
+];
+
+const map={};
+raw.forEach(r=>{
+  const k=r[1]+'||'+r[2];
+  if(!map[k]) map[k]={dist:r[1],loja:r[2],tipo:r[3],okStrikes:[],cancelStrikes:[]};
+  if(r[5]) map[k].cancelStrikes.push(r[4]);
+  else map[k].okStrikes.push(r[4]);
+});
+const stores=Object.values(map).map(s=>{
+  const maxOk=s.okStrikes.length?Math.max(...s.okStrikes):0;
+  const maxCancel=s.cancelStrikes.length?Math.max(...s.cancelStrikes):0;
+  const hasCancelled=s.cancelStrikes.length>0;
+  return{dist:s.dist,loja:s.loja,tipo:s.tipo,effectiveS:maxOk,maxCancel,hasCancelled,isOnlyCancelled:maxOk===0&&hasCancelled};
+}).sort((a,b)=>b.effectiveS-a.effectiveS||a.loja.localeCompare(b.loja));
+
+const allD=[...new Set(stores.map(s=>s.dist))].sort();
+let selD=new Set(),ddOpen=false,activeTab='all';
+
+function buildDD(){
+  document.getElementById('msd').innerHTML=
+    `<div class="mso ms-all ${selD.size===0?'sel':''}" onclick="toggleAll()"><span class="mck"></span>Todos os distribuidores</div><hr class="ms-div">`
+    +allD.map(d=>`<div class="mso ${selD.has(d)?'sel':''}" onclick="toggleD('${d.replace(/'/g,"\\'")}')"><span class="mck"></span>${d}</div>`).join('');
+}
+function toggleDD(){ddOpen=!ddOpen;document.getElementById('mst').classList.toggle('open',ddOpen);document.getElementById('msd').classList.toggle('open',ddOpen);}
+function toggleAll(){selD.clear();buildDD();updateLbl();render();}
+function toggleD(d){selD.has(d)?selD.delete(d):selD.add(d);buildDD();updateLbl();render();}
+function updateLbl(){document.getElementById('msl').textContent=selD.size===0?'Todos':selD.size===1?[...selD][0]:selD.size+' selecionados';}
+function setTab(t){activeTab=t;['all','active','cancel'].forEach(x=>document.getElementById('tab-'+x).classList.toggle('active',x===t));render();}
+document.addEventListener('click',e=>{if(!document.querySelector('.msw').contains(e.target)&&ddOpen){ddOpen=false;document.getElementById('mst').classList.remove('open');document.getElementById('msd').classList.remove('open');}});
+
+function getF(){
+  const q=document.getElementById('srch').value.toLowerCase();
+  return stores.filter(s=>{
+    const dOk=selD.size===0||selD.has(s.dist);
+    const qOk=!q||s.loja.toLowerCase().includes(q)||s.dist.toLowerCase().includes(q);
+    const tOk=activeTab==='all'||(activeTab==='active'&&!s.isOnlyCancelled)||(activeTab==='cancel'&&s.hasCancelled);
+    return dOk&&qOk&&tOk;
+  });
+}
+function sbC(n){return n>=3?'sb3':n===2?'sb2':n>=1?'sb1':'sb0';}
+function sbL(n){return n>=1?'Strike '+n:'Sem strike';}
+
+function render(){
+  const f=getF();
+  // métricas calculadas sobre os registros filtrados
+  const active=f.filter(s=>!s.isOnlyCancelled);
+  const s1=active.filter(s=>s.effectiveS===1).length;
+  const s2=active.filter(s=>s.effectiveS===2).length;
+  const s3=active.filter(s=>s.effectiveS>=3).length;
+  const nc=f.filter(s=>s.hasCancelled).length;
+
+  document.getElementById('metrics').innerHTML=`
+    <div class="mc"><div class="ml">Lojas ativas</div><div class="mv t">${active.length}</div></div>
+    <div class="mc"><div class="ml">Strike 1</div><div class="mv s1">${s1}</div></div>
+    <div class="mc"><div class="ml">Strike 2</div><div class="mv s2">${s2}</div></div>
+    <div class="mc"><div class="ml">Strike 3+</div><div class="mv s3">${s3}</div></div>
+    <div class="mc"><div class="ml">C/ cancelamento</div><div class="mv sc">${nc}</div></div>`;
+
+  document.getElementById('cbadge').textContent=f.length+' lojas';
+  document.getElementById('slist').innerHTML=!f.length?'<div class="empty">Nenhuma loja encontrada</div>'
+    :`<table class="tbl"><thead><tr><th>Loja</th><th>Distribuidor</th><th>Tipo</th><th>Strike</th></tr></thead><tbody>
+    ${f.map(s=>{
+      const tc=s.tipo==='puro'?'tp-p':s.tipo==='híbrido'?'tp-h':'tp-o';
+      return `<tr><td class="ln">${s.loja}</td><td class="dn">${s.dist}</td><td><span class="tp ${tc}">${s.tipo}</span></td><td><span class="sb ${sbC(s.effectiveS)}">${sbL(s.effectiveS)}</span></td></tr>`;
+    }).join('')}</tbody></table>`;
+
+  // gráfico só com distribuidores visíveis no filtro atual
+  const visibleDists=[...new Set(f.map(s=>s.dist))].sort();
+  const W=150,mx=Math.max(...visibleDists.map(d=>{
+    const ds=f.filter(s=>s.dist===d);
+    return ds.filter(s=>s.effectiveS===1&&!s.hasCancelled).length+ds.filter(s=>s.effectiveS===2&&!s.hasCancelled).length+ds.filter(s=>s.effectiveS>=3&&!s.hasCancelled).length+ds.filter(s=>s.hasCancelled).length;
+  }),1);
+  document.getElementById('bchart').innerHTML=visibleDists.map(d=>{
+    const ds=f.filter(s=>s.dist===d);
+    const n1=ds.filter(s=>s.effectiveS===1&&!s.hasCancelled).length;
+    const n2=ds.filter(s=>s.effectiveS===2&&!s.hasCancelled).length;
+    const n3=ds.filter(s=>s.effectiveS>=3&&!s.hasCancelled).length;
+    const nc=ds.filter(s=>s.hasCancelled).length;
+    return `<div class="bi"><div class="bd">${d}</div><div class="br">
+      ${n1?`<div class="bs bs1" style="width:${Math.round(n1/mx*W)}px" title="Strike 1: ${n1}"></div>`:''}
+      ${n2?`<div class="bs bs2" style="width:${Math.round(n2/mx*W)}px" title="Strike 2: ${n2}"></div>`:''}
+      ${n3?`<div class="bs bs3" style="width:${Math.round(n3/mx*W)}px" title="Strike 3+: ${n3}"></div>`:''}
+      ${nc?`<div class="bs bsc" style="width:${Math.round(nc/mx*W)}px" title="C/ cancelamento: ${nc}"></div>`:''}
+      <span class="bt">${n1+n2+n3+nc}</span></div></div>`;
+  }).join('');
+}
+buildDD();render();
+</script>
