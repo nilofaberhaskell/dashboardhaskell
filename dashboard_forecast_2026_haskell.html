@@ -291,6 +291,8 @@ header,.compare-banner,.card{animation:fadeUp 0.5s ease both;}
           <th>Mg Meta</th><th>Mg Real</th>
           <th style="color:var(--blue)">LL Meta</th>
           <th style="color:var(--hg)">LL Real</th>
+          <th style="color:#5a7a6a">LL 2025</th>
+          <th>Δ YoY LL</th>
         </tr></thead>
         <tbody id="tableBody"></tbody>
       </table>
@@ -675,6 +677,8 @@ function updateUI() {
     var badge = isR
       ? '<span style="font-size:10px;padding:2px 9px;border-radius:10px;background:var(--hgs);color:var(--hg);font-weight:600;border:1px solid var(--hgb)">✓ Real</span>'
       : '<span style="font-size:10px;padding:2px 9px;border-radius:10px;background:#f0f5fa;color:var(--blue);font-weight:500;border:1px solid #c5d9ef">&rarr; Fcst</span>';
+    var ll25  = STATE_2025.ll[i]||0;
+    var vLL   = isR&&rL&&ll25 ? (rL-ll25)/ll25*100 : null;
     tbody.innerHTML += '<tr>'
       +'<td>'+MONTHS[i]+'</td><td style="text-align:left">'+badge+'</td>'
       +'<td class="vf">R$'+Math.round(fG).toLocaleString('pt-BR')+'</td>'
@@ -686,6 +690,8 @@ function updateUI() {
       +'<td class="'+(isR&&rM!==null?'vr':'vm')+'">'+(isR&&rM!==null?rM.toFixed(1)+'%':'—')+'</td>'
       +'<td class="vf">R$'+Math.round(fL).toLocaleString('pt-BR')+'</td>'
       +'<td class="'+(isR&&rL?'vr':'vm')+'">'+(isR&&rL?'R$'+Math.round(rL).toLocaleString('pt-BR'):'—')+'</td>'
+      +'<td class="v25">R$'+Math.round(ll25).toLocaleString('pt-BR')+'</td>'
+      +'<td class="'+(vLL===null?'vm':vLL>=0?'vp':'vn')+'">'+(vLL===null?'—':fmtPct(vLL))+'</td>'
       +'</tr>';
   }
 
@@ -703,7 +709,7 @@ function updateUI() {
   var mg2ytd    = ytd2025l > 0 && ytd2025g > 0 ? ytd2025l/ytd2025g*100 : 0;
   var mesesLbl  = n > 0 ? MONTHS.slice(0,n).join('+') : '—';
 
-  tbody.innerHTML += '<tr><td colspan="11" style="padding:0;height:2px;background:linear-gradient(90deg,var(--hgb),transparent)"></td></tr>';
+  tbody.innerHTML += '<tr><td colspan="13" style="padding:0;height:2px;background:linear-gradient(90deg,var(--hgb),transparent)"></td></tr>';
 
   // YTD row
   tbody.innerHTML += '<tr style="background:#f0f9f5">'
@@ -718,6 +724,11 @@ function updateUI() {
     +'<td style="color:var(--amber);font-weight:700">'+avgRealMg.toFixed(1)+'%</td>'
     +'<td class="vf" style="font-weight:700">R$'+Math.round(ytdFL2).toLocaleString('pt-BR')+'</td>'
     +'<td class="vr" style="font-weight:700">R$'+Math.round(tRL).toLocaleString('pt-BR')+'</td>'
+    +(function(){
+      var vLLytd = ytd2025l > 0 ? (tRL-ytd2025l)/ytd2025l*100 : 0;
+      return '<td style="font-weight:700;color:#5a7a6a">R$'+Math.round(ytd2025l).toLocaleString('pt-BR')+'</td>'
+        +'<td class="'+(vLLytd>=0?'vp':'vn')+'" style="font-weight:700">'+fmtPct(vLLytd)+'</td>';
+    })()
     +'</tr>';
 
   // 2025 FY row
@@ -732,6 +743,8 @@ function updateUI() {
     +'<td style="font-weight:700;color:#5a7a6a">'+mg2025fy.toFixed(1)+'%</td>'
     +'<td class="vm">—</td>'
     +'<td style="font-weight:700;color:#5a7a6a">R$'+Math.round(STATE_2025.fyLl).toLocaleString('pt-BR')+'</td>'
+    +'<td style="font-weight:700;color:#5a7a6a">R$'+Math.round(STATE_2025.fyLl).toLocaleString('pt-BR')+'</td>'
+    +'<td class="vm">\u2014</td>'
     +'</tr>';
 
   // Meta FY row
@@ -746,6 +759,11 @@ function updateUI() {
     +'<td style="color:#5a7a6a">'+mg2025fy.toFixed(1)+'%</td>'
     +'<td class="vf" style="font-weight:700">R$'+Math.round(tFL).toLocaleString('pt-BR')+'</td>'
     +'<td class="vm">—</td>'
+    +'<td style="color:#5a7a6a">R$'+Math.round(STATE_2025.fyLl).toLocaleString('pt-BR')+'</td>'
+    +(function(){
+        var vLLfy = STATE_2025.fyLl > 0 ? (tFL-STATE_2025.fyLl)/STATE_2025.fyLl*100 : 0;
+        return '<td class="'+(vLLfy>=0?'vp':'vn')+'" style="font-weight:700">'+fmtPct(vLLfy)+'</td>';
+    })()
     +'</tr>';
 }
 
@@ -753,12 +771,12 @@ window.addEventListener('load', function(){
   // Show hardcoded data immediately
   state = {
     fcstGMV:    [286484,308786,340841,393275,436201,512843,623227,767376,945318,1057386,1199861,1129303],
-    realGMV:    [306990,387792,300286,null,null,null,null,null,null,null,null,null],
-    fcstLL:     [31513,37054,44309,55058,61068,76927,93484,122780,160704,190330,227974,225861],
-    realLL:     [31795,53973,39037,null,null,null,null,null,null,null,null,null],
-    fcstMargin: [11,12,13,14,14,15,15,16,17,18,19,20],
-    realMargin: [10,14,13,null,null,null,null,null,null,null,null,null],
-    fyFcst:8000901, fyLl:1327062, lastMonthIdx:2, tacos:8.3
+    realGMV:    [306990,387792,496145,null,null,null,null,null,null,null,null,null],
+    fcstLL:     [31513,37054,44309,55058,61068,76927,93484,115106,145579,172883,198937,191982],
+    realLL:     [24903,43300,48682,null,null,null,null,null,null,null,null,null],
+    fcstMargin: [11,12,13,14,14,15,15,15,15.4,16.35,16.58,17],
+    realMargin: [8.11,11.17,9.81,null,null,null,null,null,null,null,null,null],
+    fyFcst:8000901, fyLl:1223900, lastMonthIdx:2, tacos:8.3
   };
   buildCharts();
   updateUI();
