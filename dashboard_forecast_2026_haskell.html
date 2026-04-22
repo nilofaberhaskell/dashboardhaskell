@@ -430,12 +430,13 @@ header,.compare-banner,.card{animation:fadeUp 0.5s ease both;}
           <th>Δ Meta</th>
           <th style="color:#5a7a6a">GMV 2025</th>
           <th>Δ YoY</th>
-          <th>Mg Meta</th><th>Mg Real</th>
           <th style="color:var(--blue)">LL Meta</th>
           <th style="color:var(--hg)">LL Real</th>
           <th>Δ LL Meta</th>
           <th style="color:#5a7a6a">LL 2025</th>
           <th>Δ YoY LL</th>
+          <th>Mg Meta</th><th>Mg Real</th>
+          <th style="color:#5a7a6a">Mg 2025</th>
         </tr></thead>
         <tbody id="tableBody"></tbody>
       </table>
@@ -840,8 +841,6 @@ function updateUI() {
       +'<td class="'+(vM===null?'vm':vM>=0?'vp':'vn')+'">'+(vM===null?'—':fmtPct(vM))+'</td>'
       +'<td class="v25">R$'+Math.round(g25).toLocaleString('pt-BR')+'</td>'
       +'<td class="'+(vY===null?'vm':vY>=0?'vp':'vn')+'">'+(vY===null?'—':fmtPct(vY))+'</td>'
-      +'<td class="vf">'+(fM!==null?fM+'%':'—')+'</td>'
-      +'<td class="'+(isR&&rM!==null?'vr':'vm')+'">'+(isR&&rM!==null?rM.toFixed(1)+'%':'—')+'</td>'
       +'<td class="vf">R$'+Math.round(fL).toLocaleString('pt-BR')+'</td>'
       +'<td class="'+(isR&&rL?'vr':'vm')+'">'+(isR&&rL?'R$'+Math.round(rL).toLocaleString('pt-BR'):'—')+'</td>'
       +(function(){
@@ -850,85 +849,99 @@ function updateUI() {
       })()
       +'<td class="v25">R$'+Math.round(ll25).toLocaleString('pt-BR')+'</td>'
       +'<td class="'+(vLL===null?'vm':vLL>=0?'vp':'vn')+'">'+(vLL===null?'—':fmtPct(vLL))+'</td>'
+      +'<td class="vf">'+(fM!==null?fM+'%':'—')+'</td>'
+      +'<td class="'+(isR&&rM!==null?'vr':'vm')+'">'+(isR&&rM!==null?rM.toFixed(1)+'%':'—')+'</td>'
+      +(function(){
+        var mg25 = STATE_2025.gmv[i]>0 ? STATE_2025.ll[i]/STATE_2025.gmv[i]*100 : null;
+        return '<td class="v25">'+(mg25!==null?mg25.toFixed(1)+'%':'—')+'</td>';
+      })()
       +'</tr>';
   }
 
   // ── TABLE FOOTER: 3 summary rows ──
-  var tFG = state.fcstGMV.reduce(function(a,b){return a+(b||0);},0);
-  var tRG = state.realGMV.slice(0,n).filter(function(v){return v!==null;}).reduce(function(a,b){return a+b;},0);
-  var tFL = state.fcstLL.reduce(function(a,b){return a+(b||0);},0);
-  var tRL = state.realLL.slice(0,n).filter(function(v){return v!==null;}).reduce(function(a,b){return a+b;},0);
-  var ytdFG2    = state.fcstGMV.slice(0,n).reduce(function(a,b){return a+(b||0);},0);
-  var ytdFL2    = state.fcstLL.slice(0,n).reduce(function(a,b){return a+(b||0);},0);
-  var ytd2025g  = STATE_2025.gmv.slice(0,n).reduce(function(a,b){return a+b;},0);
-  var ytd2025l  = STATE_2025.ll.slice(0,n).reduce(function(a,b){return a+b;},0);
-  var vMYtd     = ytdFG2 > 0 ? (tRG-ytdFG2)/ytdFG2*100 : 0;
-  var vYYtd     = ytd2025g > 0 ? (tRG-ytd2025g)/ytd2025g*100 : 0;
-  var mg2ytd    = ytd2025l > 0 && ytd2025g > 0 ? ytd2025l/ytd2025g*100 : 0;
-  var mesesLbl  = n > 0 ? MONTHS.slice(0,n).join('+') : '—';
+  // Compute all YTD aggregates
+  var tFG      = state.fcstGMV.reduce(function(a,b){return a+(b||0);},0);
+  var tRG      = state.realGMV.slice(0,n).filter(function(v){return v!==null;}).reduce(function(a,b){return a+b;},0);
+  var tFL      = state.fcstLL.reduce(function(a,b){return a+(b||0);},0);
+  var tRL      = state.realLL.slice(0,n).filter(function(v){return v!==null;}).reduce(function(a,b){return a+b;},0);
+  var ytdFG2   = state.fcstGMV.slice(0,n).reduce(function(a,b){return a+(b||0);},0);
+  var ytdFL2   = state.fcstLL.slice(0,n).reduce(function(a,b){return a+(b||0);},0);
+  var ytd2025g = STATE_2025.gmv.slice(0,n).reduce(function(a,b){return a+b;},0);
+  var ytd2025l = STATE_2025.ll.slice(0,n).reduce(function(a,b){return a+b;},0);
+  // Margins
+  var mgMetaYtd   = n > 0 ? state.fcstMargin.slice(0,n).reduce(function(a,b){return a+(b||0);},0)/n : 0;
+  var mgRealYtd   = avgRealMg;
+  var mg2025ytd_v = ytd2025g > 0 ? ytd2025l/ytd2025g*100 : 0;
+  // Deltas
+  var vMYtd    = ytdFG2  > 0 ? (tRG-ytdFG2)/ytdFG2*100   : 0;
+  var vYYtd    = ytd2025g > 0 ? (tRG-ytd2025g)/ytd2025g*100 : 0;
+  var dLLytd_v = ytdFL2  > 0 ? (tRL-ytdFL2)/ytdFL2*100   : 0;
+  var vLLytd_v = ytd2025l > 0 ? (tRL-ytd2025l)/ytd2025l*100 : 0;
+  var vYFy     = STATE_2025.fyGmv > 0 ? (tFG-STATE_2025.fyGmv)/STATE_2025.fyGmv*100 : 0;
+  var vLLfy_v  = STATE_2025.fyLl  > 0 ? (tFL-STATE_2025.fyLl)/STATE_2025.fyLl*100   : 0;
 
-  tbody.innerHTML += '<tr><td colspan="14" style="padding:0;height:2px;background:linear-gradient(90deg,var(--hgb),transparent)"></td></tr>';
+  tbody.innerHTML += '<tr><td colspan="15" style="padding:0;height:2px;background:linear-gradient(90deg,var(--hgb),transparent)"></td></tr>';
 
-  // YTD row
+  // ── YTD 2026 (15 cols) ──────────────────────────────────────
+  // 1:Mês  2:Status  3:GMVMeta  4:GMVReal  5:ΔMeta  6:GMV2025  7:ΔYoY
+  // 8:LLMeta  9:LLReal  10:ΔLLMeta  11:LL2025  12:ΔYoYLL
+  // 13:MgMeta  14:MgReal  15:Mg2025
   tbody.innerHTML += '<tr style="background:#f0f9f5">'
-    +'<td style="color:var(--hg);font-weight:700;line-height:1.3">YTD 2026<br><span style="font-size:9px;color:var(--muted);font-weight:400">'+mesesLbl+'</span></td>'
+    +'<td style="color:var(--hg);font-weight:700">YTD 2026</td>'
     +'<td style="text-align:left"><span style="font-size:10px;padding:3px 10px;border-radius:10px;background:var(--hgs);color:var(--hg);font-weight:600;border:1px solid var(--hgb)">'+n+' meses</span></td>'
     +'<td class="vf" style="font-weight:700">R$'+Math.round(ytdFG2).toLocaleString('pt-BR')+'</td>'
     +'<td class="vr" style="font-weight:700">R$'+Math.round(tRG).toLocaleString('pt-BR')+'</td>'
     +'<td class="'+(vMYtd>=0?'vp':'vn')+'" style="font-weight:700">'+fmtPct(vMYtd)+'</td>'
     +'<td style="font-weight:700;color:#5a7a6a">R$'+Math.round(ytd2025g).toLocaleString('pt-BR')+'</td>'
     +'<td class="'+(vYYtd>=0?'vp':'vn')+'" style="font-weight:700">'+fmtPct(vYYtd)+'</td>'
-    +'<td class="vf">'+fyMgFcst.toFixed(1)+'%</td>'
-    +'<td style="color:var(--amber);font-weight:700">'+avgRealMg.toFixed(1)+'%</td>'
     +'<td class="vf" style="font-weight:700">R$'+Math.round(ytdFL2).toLocaleString('pt-BR')+'</td>'
     +'<td class="vr" style="font-weight:700">R$'+Math.round(tRL).toLocaleString('pt-BR')+'</td>'
-    +(function(){
-      var dLLytd = ytdFL2 > 0 ? (tRL-ytdFL2)/ytdFL2*100 : 0;
-      return '<td class="'+(dLLytd>=0?'vp':'vn')+'" style="font-weight:700">'+fmtPct(dLLytd)+'</td>';
-    })()
-    +(function(){
-      var vLLytd = ytd2025l > 0 ? (tRL-ytd2025l)/ytd2025l*100 : 0;
-      return '<td style="font-weight:700;color:#5a7a6a">R$'+Math.round(ytd2025l).toLocaleString('pt-BR')+'</td>'
-        +'<td class="'+(vLLytd>=0?'vp':'vn')+'" style="font-weight:700">'+fmtPct(vLLytd)+'</td>';
-    })()
+    +'<td class="'+(dLLytd_v>=0?'vp':'vn')+'" style="font-weight:700">'+fmtPct(dLLytd_v)+'</td>'
+    +'<td style="font-weight:700;color:#5a7a6a">R$'+Math.round(ytd2025l).toLocaleString('pt-BR')+'</td>'
+    +'<td class="'+(vLLytd_v>=0?'vp':'vn')+'" style="font-weight:700">'+fmtPct(vLLytd_v)+'</td>'
+    +'<td class="vf">'+mgMetaYtd.toFixed(1)+'%</td>'
+    +'<td style="color:var(--amber);font-weight:700">'+mgRealYtd.toFixed(1)+'%</td>'
+    +'<td style="color:#5a7a6a;font-weight:700">'+(mg2025ytd_v>0?mg2025ytd_v.toFixed(1)+'%':'—')+'</td>'
     +'</tr>';
 
-  // 2025 FY row
-  var vYFy = STATE_2025.fyGmv > 0 ? (tFG-STATE_2025.fyGmv)/STATE_2025.fyGmv*100 : 0;
+  // ── FY 2025 (15 cols) ──────────────────────────────────────
   tbody.innerHTML += '<tr style="background:#f9f9f7;border-top:1px dashed #d8e8df">'
-    +'<td style="color:#5a7a6a;font-weight:700;line-height:1.3">2025 FY<br><span style="font-size:9px;color:var(--muted);font-weight:400">ano completo (ref.)</span></td>'
+    +'<td style="color:#5a7a6a;font-weight:700">FY 2025</td>'
     +'<td style="text-align:left"><span style="font-size:10px;padding:3px 10px;border-radius:10px;background:#f5f5f0;color:#5a7a6a;font-weight:600;border:1px solid #d5dbd5">Ano ant.</span></td>'
-    +'<td class="vm">—</td><td class="vm">—</td><td class="vm">—</td>'
+    +'<td class="vm">—</td>'
+    +'<td class="vm">—</td>'
+    +'<td class="vm">—</td>'
     +'<td style="font-weight:700;color:#5a7a6a">R$'+Math.round(STATE_2025.fyGmv).toLocaleString('pt-BR')+'</td>'
     +'<td class="vm">—</td>'
     +'<td class="vm">—</td>'
-    +'<td style="font-weight:700;color:#5a7a6a">'+mg2025fy.toFixed(1)+'%</td>'
+    +'<td class="vm">—</td>'
     +'<td class="vm">—</td>'
     +'<td style="font-weight:700;color:#5a7a6a">R$'+Math.round(STATE_2025.fyLl).toLocaleString('pt-BR')+'</td>'
-    +'<td style="font-weight:700;color:#5a7a6a">R$'+Math.round(STATE_2025.fyLl).toLocaleString('pt-BR')+'</td>'
-    +'<td class="vm">\u2014</td>'
-    +'<td class="vm">\u2014</td>'
+    +'<td class="vm">—</td>'
+    +'<td class="vm">—</td>'
+    +'<td class="vm">—</td>'
+    +'<td style="font-weight:700;color:#5a7a6a">'+mg2025fy.toFixed(1)+'%</td>'
     +'</tr>';
 
-  // Meta FY row
+  // ── META 2026 (15 cols) ──────────────────────────────────────
   tbody.innerHTML += '<tr style="background:#f0f5ff;border-top:1px dashed #c5d9ef">'
-    +'<td style="color:var(--blue);font-weight:700;line-height:1.3">Meta FY 2026<br><span style="font-size:9px;color:var(--muted);font-weight:400">12 meses projetados</span></td>'
+    +'<td style="color:var(--blue);font-weight:700">META 2026</td>'
     +'<td style="text-align:left"><span style="font-size:10px;padding:3px 10px;border-radius:10px;background:#f0f5fa;color:var(--blue);font-weight:500;border:1px solid #c5d9ef">Forecast</span></td>'
     +'<td class="vf" style="font-weight:700">R$'+Math.round(tFG).toLocaleString('pt-BR')+'</td>'
-    +'<td class="vm">—</td><td class="vm">—</td>'
+    +'<td class="vm">—</td>'
+    +'<td class="vm">—</td>'
     +'<td style="color:#5a7a6a">R$'+Math.round(STATE_2025.fyGmv).toLocaleString('pt-BR')+'</td>'
     +'<td class="'+(vYFy>=0?'vp':'vn')+'" style="font-weight:700">'+fmtPct(vYFy)+'</td>'
-    +'<td class="vf">'+fyMgFcst.toFixed(1)+'%</td>'
-    +'<td style="color:#5a7a6a">'+mg2025fy.toFixed(1)+'%</td>'
     +'<td class="vf" style="font-weight:700">R$'+Math.round(tFL).toLocaleString('pt-BR')+'</td>'
     +'<td class="vm">—</td>'
     +'<td class="vm">—</td>'
-    +'<td style="color:#5a7a6a">R$'+Math.round(STATE_2025.fyLl).toLocaleString('pt-BR')+'</td>'
-    +(function(){
-        var vLLfy = STATE_2025.fyLl > 0 ? (tFL-STATE_2025.fyLl)/STATE_2025.fyLl*100 : 0;
-        return '<td class="'+(vLLfy>=0?'vp':'vn')+'" style="font-weight:700">'+fmtPct(vLLfy)+'</td>';
-    })()
+    +'<td class="vm">—</td>'
+    +'<td class="'+(vLLfy_v>=0?'vp':'vn')+'" style="font-weight:700">'+fmtPct(vLLfy_v)+'</td>'
+    +'<td class="vf">'+fyMgFcst.toFixed(1)+'%</td>'
+    +'<td class="vm">—</td>'
+    +'<td style="color:#5a7a6a">'+mg2025fy.toFixed(1)+'%</td>'
     +'</tr>';
+
 }
 
 window.addEventListener('load', function(){
