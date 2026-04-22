@@ -51,16 +51,25 @@ header{display:flex;justify-content:space-between;align-items:center;margin-bott
 .sheets-link:hover{background:#deeaf7;}
 
 /* COMPARE BANNER */
-.compare-banner{display:grid;grid-template-columns:1fr 2px 1fr 2px 1fr 2px 1fr;gap:0;background:#fff;border:1px solid var(--border);border-radius:16px;margin-bottom:20px;overflow:hidden;box-shadow:0 2px 8px rgba(45,122,95,0.06);}
-.compare-divider{background:var(--border);}
-.compare-col{padding:20px 22px;}
-.compare-col.highlight{background:linear-gradient(135deg,var(--hgs) 0%,#fff 100%);}
-.compare-eyebrow{font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.compare-banner{background:#fff;border:1px solid var(--border);border-radius:16px;margin-bottom:20px;overflow:hidden;box-shadow:0 2px 8px rgba(45,122,95,0.06);}
+.cb-headers{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;border-bottom:2px solid var(--border);}
+.cb-head{padding:14px 20px 12px;display:flex;align-items:center;gap:8px;}
+.cb-head:not(:last-child){border-right:1px solid var(--border);}
+.cb-head-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.cb-head-label{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;line-height:1.3;}
+.cb-head-year{font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:800;line-height:1;display:block;margin-top:2px;}
+.cb-rows{}
+.cb-row{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;border-bottom:1px solid var(--bg3);}
+.cb-row:last-child{border-bottom:none;}
+.cb-row.cb-divider-row{border-top:2px solid var(--border);background:var(--bg);}
+.cb-row.cb-small .cb-cell-val{font-size:15px!important;}
+.cb-cell{padding:10px 20px;display:flex;flex-direction:column;justify-content:center;}
+.cb-cell:not(:last-child){border-right:1px solid var(--bg3);}
+.cb-cell-label{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:0.5px;text-transform:uppercase;margin-bottom:3px;}
+.cb-cell-val{font-size:20px;font-weight:800;letter-spacing:-0.5px;line-height:1.1;}
+.cb-cell-val.muted{color:var(--muted)!important;font-weight:400;font-size:13px;}
+.cb-cell-val.sm{font-size:15px!important;}
 .dot{width:7px;height:7px;border-radius:50%;}
-.compare-metric{margin-bottom:10px;}
-.compare-metric-label{font-size:11px;color:var(--muted);font-weight:500;margin-bottom:3px;}
-.compare-metric-value{font-size:22px;font-weight:800;letter-spacing:-0.5px;line-height:1;}
-.compare-chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px;}
 .chip{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;padding:3px 10px;border-radius:20px;}
 .chip-green{background:rgba(45,122,95,0.1);color:var(--hg);}
 .chip-amber{background:rgba(232,147,10,0.1);color:var(--amber);}
@@ -153,44 +162,156 @@ header,.compare-banner,.card{animation:fadeUp 0.5s ease both;}
   </header>
 
   <div class="compare-banner">
-    <div class="compare-col">
-      <div class="compare-eyebrow" style="color:#7a9a89"><div class="dot" style="background:#b0c8bc"></div>ANO ANTERIOR — 2025</div>
-      <div class="compare-metric"><div class="compare-metric-label">GMV Total 2025</div><div class="compare-metric-value" style="color:var(--text2)" id="c2025GmvFy">—</div></div>
-      <div class="compare-metric"><div class="compare-metric-label">GMV YTD (meses realizados)</div><div class="compare-metric-value" style="color:#5a9e82;font-size:18px" id="c2025GmvYtd">—</div></div>
-      <div class="compare-metric"><div class="compare-metric-label">LL YTD (meses realizados)</div><div class="compare-metric-value" style="color:#5a9e82;font-size:18px" id="c2025LlYtd">—</div></div>
-      <div class="compare-metric"><div class="compare-metric-label">Lucro Líquido Total 2025</div><div class="compare-metric-value" style="color:var(--text2);font-size:18px" id="c2025Ll">—</div></div>
-      <div class="compare-chips"><span class="chip chip-gray" id="c2025Margin">Margem: —</span></div>
-    </div>
-    <div class="compare-divider"></div>
-    <div class="compare-col highlight">
-      <div class="compare-eyebrow" style="color:var(--hg)"><div class="dot" style="background:var(--hg)"></div>REALIZADO 2026 — YTD</div>
-      <div class="compare-metric"><div class="compare-metric-label">GMV Realizado YTD</div><div class="compare-metric-value" style="color:var(--hg)" id="cRealGmvYtd">—</div></div>
-      <div class="compare-metric"><div class="compare-metric-label">Lucro Líquido YTD</div><div class="compare-metric-value" style="color:var(--hg);font-size:18px" id="cRealLlYtd">—</div></div>
-      <div class="compare-metric"><div class="compare-metric-label">Meses realizados</div><div class="compare-metric-value" style="color:var(--hg);font-size:18px" id="cRealMeses">—</div></div>
-      <div class="compare-chips">
-        <span class="chip chip-green" id="cRealYoy">—</span>
-        <span class="chip chip-green" id="cRealVsMeta">—</span>
-        <span class="chip chip-amber" id="cRealMargin">—</span>
+    <!-- HEADERS -->
+    <div class="cb-headers">
+      <div class="cb-head" style="background:#f9faf9;">
+        <div class="cb-head-dot" style="background:#b0c8bc"></div>
+        <div>
+          <div class="cb-head-label" style="color:#7a9a89;">Ano Anterior</div>
+          <span class="cb-head-year" style="color:var(--text2);">2025</span>
+        </div>
+      </div>
+      <div class="cb-head" style="background:var(--hgs);">
+        <div class="cb-head-dot" style="background:var(--hg)"></div>
+        <div>
+          <div class="cb-head-label" style="color:var(--hg);">Realizado YTD</div>
+          <span class="cb-head-year" style="color:var(--hg);">2026</span>
+        </div>
+      </div>
+      <div class="cb-head" style="background:#f5f8ff;">
+        <div class="cb-head-dot" style="background:var(--blue)"></div>
+        <div>
+          <div class="cb-head-label" style="color:var(--blue);">Meta Forecast</div>
+          <span class="cb-head-year" style="color:var(--blue);">FY 2026</span>
+        </div>
+      </div>
+      <div class="cb-head" style="background:#fffbf5;">
+        <div class="cb-head-dot" style="background:var(--amber)"></div>
+        <div>
+          <div class="cb-head-label" style="color:var(--amber);">Crescimento</div>
+          <span class="cb-head-year" style="color:var(--amber);">YoY</span>
+        </div>
       </div>
     </div>
-    <div class="compare-divider"></div>
-    <div class="compare-col">
-      <div class="compare-eyebrow" style="color:var(--blue)"><div class="dot" style="background:var(--blue)"></div>META FORECAST — FY 2026</div>
-      <div class="compare-metric"><div class="compare-metric-label">GMV Meta Anual</div><div class="compare-metric-value" style="color:var(--blue)" id="cFcstGmvFy">—</div></div>
-      <div class="compare-metric"><div class="compare-metric-label">Lucro Líquido Meta</div><div class="compare-metric-value" style="color:var(--blue);font-size:18px" id="cFcstLlFy">—</div></div>
-      <div class="compare-metric"><div class="compare-metric-label">Restante para atingir</div><div class="compare-metric-value" style="color:var(--blue);font-size:18px" id="cFcstFalta">—</div></div>
-      <div class="compare-chips">
-        <span class="chip chip-blue" id="cFcstMgMeta">—</span>
-        <span class="chip chip-blue" id="cFcstAvanco">—</span>
+
+    <!-- ROW 1: GMV Total -->
+    <div class="cb-row">
+      <div class="cb-cell" style="background:#f9faf9;">
+        <div class="cb-cell-label">GMV Total 2025</div>
+        <div class="cb-cell-val" style="color:var(--text2)" id="c2025GmvFy">—</div>
+      </div>
+      <div class="cb-cell" style="background:var(--hgs);">
+        <div class="cb-cell-label">GMV Total 2026</div>
+        <div class="cb-cell-val muted">—</div>
+      </div>
+      <div class="cb-cell" style="background:#f5f8ff;">
+        <div class="cb-cell-label">GMV Meta FY</div>
+        <div class="cb-cell-val" style="color:var(--blue)" id="cFcstGmvFy">—</div>
+      </div>
+      <div class="cb-cell" style="background:#fffbf5;">
+        <div class="cb-cell-label">GMV Meta vs 2025</div>
+        <div class="cb-cell-val" id="cYoyFy" style="color:var(--amber)">—</div>
       </div>
     </div>
-    <div class="compare-divider"></div>
-    <div class="compare-col">
-      <div class="compare-eyebrow" style="color:var(--amber)"><div class="dot" style="background:var(--amber)"></div>CRESCIMENTO YOY</div>
-      <div class="compare-metric"><div class="compare-metric-label">GMV YTD vs 2025</div><div class="compare-metric-value" id="cYoyGmv" style="color:var(--hg)">—</div></div>
-      <div class="compare-metric"><div class="compare-metric-label">LL YTD vs 2025</div><div class="compare-metric-value" style="font-size:18px" id="cYoyLl">—</div></div>
-      <div class="compare-metric"><div class="compare-metric-label">Meta FY vs 2025</div><div class="compare-metric-value" style="color:var(--blue);font-size:18px" id="cYoyFy">—</div></div>
-      <div class="compare-chips"><span class="chip chip-amber" id="cTacos">TACOS: 8,3%</span></div>
+
+    <!-- ROW 2: GMV YTD -->
+    <div class="cb-row" style="border-bottom:2px solid var(--border);">
+      <div class="cb-cell" style="background:#f9faf9;">
+        <div class="cb-cell-label">GMV YTD 2025</div>
+        <div class="cb-cell-val" style="color:#5a9e82" id="c2025GmvYtd">—</div>
+      </div>
+      <div class="cb-cell" style="background:var(--hgs);">
+        <div class="cb-cell-label">GMV Realizado YTD</div>
+        <div class="cb-cell-val" style="color:var(--hg)" id="cRealGmvYtd">—</div>
+      </div>
+      <div class="cb-cell" style="background:#f5f8ff;">
+        <div class="cb-cell-label">GMV Meta YTD</div>
+        <div class="cb-cell-val" style="color:var(--blue)" id="cFcstGmvYtd">—</div>
+      </div>
+      <div class="cb-cell" style="background:#fffbf5;">
+        <div class="cb-cell-label">GMV YTD YoY</div>
+        <div class="cb-cell-val" id="cYoyGmv" style="color:var(--hg)">—</div>
+      </div>
+    </div>
+
+    <!-- ROW 3: LL Total -->
+    <div class="cb-row">
+      <div class="cb-cell" style="background:#f9faf9;">
+        <div class="cb-cell-label">LL Total 2025</div>
+        <div class="cb-cell-val" style="color:var(--text2)" id="c2025Ll">—</div>
+      </div>
+      <div class="cb-cell" style="background:var(--hgs);">
+        <div class="cb-cell-label">LL Total 2026</div>
+        <div class="cb-cell-val muted">—</div>
+      </div>
+      <div class="cb-cell" style="background:#f5f8ff;">
+        <div class="cb-cell-label">LL Meta FY</div>
+        <div class="cb-cell-val" style="color:var(--blue)" id="cFcstLlFy">—</div>
+      </div>
+      <div class="cb-cell" style="background:#fffbf5;">
+        <div class="cb-cell-label">LL Meta vs 2025</div>
+        <div class="cb-cell-val muted">—</div>
+      </div>
+    </div>
+
+    <!-- ROW 4: LL YTD -->
+    <div class="cb-row" style="border-bottom:2px solid var(--border);">
+      <div class="cb-cell" style="background:#f9faf9;">
+        <div class="cb-cell-label">LL YTD 2025</div>
+        <div class="cb-cell-val" style="color:#5a9e82" id="c2025LlYtd">—</div>
+      </div>
+      <div class="cb-cell" style="background:var(--hgs);">
+        <div class="cb-cell-label">LL Realizado YTD</div>
+        <div class="cb-cell-val" style="color:var(--hg)" id="cRealLlYtd">—</div>
+      </div>
+      <div class="cb-cell" style="background:#f5f8ff;">
+        <div class="cb-cell-label">LL Meta YTD</div>
+        <div class="cb-cell-val" style="color:var(--blue)" id="cFcstLlYtd">—</div>
+      </div>
+      <div class="cb-cell" style="background:#fffbf5;">
+        <div class="cb-cell-label">LL YTD YoY</div>
+        <div class="cb-cell-val" id="cYoyLl">—</div>
+      </div>
+    </div>
+
+    <!-- ROW 5: Margem Total (smaller) -->
+    <div class="cb-row cb-small" style="background:var(--bg);">
+      <div class="cb-cell" style="background:#f9faf9;">
+        <div class="cb-cell-label">Margem Total 2025</div>
+        <div class="cb-cell-val sm" style="color:var(--text2)" id="cMg2025Fy">—</div>
+      </div>
+      <div class="cb-cell" style="background:var(--hgs);">
+        <div class="cb-cell-label">Margem Total 2026</div>
+        <div class="cb-cell-val muted">—</div>
+      </div>
+      <div class="cb-cell" style="background:#f5f8ff;">
+        <div class="cb-cell-label">Margem Meta FY</div>
+        <div class="cb-cell-val sm" style="color:var(--blue)" id="cMgMetaFy">—</div>
+      </div>
+      <div class="cb-cell" style="background:#fffbf5;">
+        <div class="cb-cell-label">&nbsp;</div>
+        <div class="cb-cell-val muted">—</div>
+      </div>
+    </div>
+
+    <!-- ROW 6: Margem YTD (smaller) -->
+    <div class="cb-row cb-small">
+      <div class="cb-cell" style="background:#f9faf9;">
+        <div class="cb-cell-label">Margem YTD 2025</div>
+        <div class="cb-cell-val sm" style="color:#5a9e82" id="cMg2025Ytd">—</div>
+      </div>
+      <div class="cb-cell" style="background:var(--hgs);">
+        <div class="cb-cell-label">Margem YTD 2026</div>
+        <div class="cb-cell-val sm" style="color:var(--hg)" id="cRealMarginYtd">—</div>
+      </div>
+      <div class="cb-cell" style="background:#f5f8ff;">
+        <div class="cb-cell-label">Margem Meta YTD</div>
+        <div class="cb-cell-val sm" style="color:var(--blue)" id="cMgMetaYtd">—</div>
+      </div>
+      <div class="cb-cell" style="background:#fffbf5;">
+        <div class="cb-cell-label">Margem YoY (p.p.)</div>
+        <div class="cb-cell-val sm" id="cMgYoy">—</div>
+      </div>
     </div>
   </div>
 
@@ -588,28 +709,40 @@ function updateUI() {
   document.getElementById('footerMonth').textContent = lastIdx >= 0 ? MONTHS[lastIdx]+' 2026' : '—';
 
   // ── COMPARE BANNER ──
+  var ytdFcstGMV_b = state.fcstGMV.slice(0,n).reduce(function(a,b){return a+(b||0);},0);
+  var ytdFcstLL_b  = state.fcstLL.slice(0,n).reduce(function(a,b){return a+(b||0);},0);
+  var mg2025ytd_b  = ytd2025 > 0 ? ytd2025LL/ytd2025*100 : 0;
+  var mgMetaYtd_b  = ytdFcstGMV_b > 0 ? ytdFcstLL_b/ytdFcstGMV_b*100 : fyMgFcst;
+  var mgYoyPp      = avgRealMg - mg2025ytd_b;
+  // Row 1 — GMV Total
   document.getElementById('c2025GmvFy').textContent   = fmt(STATE_2025.fyGmv);
-  document.getElementById('c2025GmvYtd').textContent  = fmt(ytd2025);
-  document.getElementById('c2025LlYtd').textContent   = fmt(ytd2025LL);
-  document.getElementById('c2025Ll').textContent      = fmt(STATE_2025.fyLl);
-  document.getElementById('c2025Margin').textContent  = 'Margem: '+mg2025fy.toFixed(1)+'%';
-  document.getElementById('cRealGmvYtd').textContent  = fmt(ytdReal);
-  document.getElementById('cRealLlYtd').textContent   = fmt(ytdRealLL);
-  document.getElementById('cRealMeses').textContent   = n+' / 12';
-  document.getElementById('cRealYoy').textContent     = 'YoY '+fmtPct(yoy);
-  document.getElementById('cRealVsMeta').textContent  = 'vs Meta '+fmtPct(varMeta);
-  document.getElementById('cRealMargin').textContent  = 'Margem '+avgRealMg.toFixed(1)+'%';
   document.getElementById('cFcstGmvFy').textContent   = fmt(state.fyFcst);
-  document.getElementById('cFcstLlFy').textContent    = fmt(state.fyLl);
-  document.getElementById('cFcstFalta').textContent   = fmt(state.fyFcst - ytdReal);
-  document.getElementById('cFcstMgMeta').textContent  = 'Margem meta: '+fyMgFcst.toFixed(1)+'%';
-  document.getElementById('cFcstAvanco').textContent  = (ytdReal/state.fyFcst*100).toFixed(1)+'% atingido';
-  document.getElementById('cYoyGmv').textContent      = fmtPct(yoy);
-  document.getElementById('cYoyGmv').style.color      = yoy  >= 0 ? 'var(--hg)' : 'var(--red)';
-  document.getElementById('cYoyLl').textContent       = fmtPct(yoyLL);
-  document.getElementById('cYoyLl').style.color       = yoyLL>= 0 ? 'var(--hg)' : 'var(--red)';
   document.getElementById('cYoyFy').textContent       = fmtPct(yoyFy);
-  document.getElementById('cTacos').textContent       = 'TACOS: '+state.tacos+'%';
+  document.getElementById('cYoyFy').style.color       = yoyFy >= 0 ? 'var(--amber)' : 'var(--red)';
+  // Row 2 — GMV YTD
+  document.getElementById('c2025GmvYtd').textContent  = fmt(ytd2025);
+  document.getElementById('cRealGmvYtd').textContent  = fmt(ytdReal);
+  document.getElementById('cFcstGmvYtd').textContent  = fmt(ytdFcstGMV_b);
+  document.getElementById('cYoyGmv').textContent      = fmtPct(yoy);
+  document.getElementById('cYoyGmv').style.color      = yoy >= 0 ? 'var(--hg)' : 'var(--red)';
+  // Row 3 — LL Total
+  document.getElementById('c2025Ll').textContent      = fmt(STATE_2025.fyLl);
+  document.getElementById('cFcstLlFy').textContent    = fmt(state.fyLl);
+  // Row 4 — LL YTD
+  document.getElementById('c2025LlYtd').textContent   = fmt(ytd2025LL);
+  document.getElementById('cRealLlYtd').textContent   = fmt(ytdRealLL);
+  document.getElementById('cFcstLlYtd').textContent   = fmt(ytdFcstLL_b);
+  document.getElementById('cYoyLl').textContent       = fmtPct(yoyLL);
+  document.getElementById('cYoyLl').style.color       = yoyLL >= 0 ? 'var(--hg)' : 'var(--red)';
+  // Row 5 — Margem Total
+  document.getElementById('cMg2025Fy').textContent    = mg2025fy.toFixed(1)+'%';
+  document.getElementById('cMgMetaFy').textContent    = fyMgFcst.toFixed(1)+'%';
+  // Row 6 — Margem YTD
+  document.getElementById('cMg2025Ytd').textContent   = mg2025ytd_b.toFixed(1)+'%';
+  document.getElementById('cRealMarginYtd').textContent = avgRealMg.toFixed(1)+'%';
+  document.getElementById('cMgMetaYtd').textContent   = mgMetaYtd_b.toFixed(1)+'%';
+  document.getElementById('cMgYoy').textContent       = (mgYoyPp>=0?'+':'')+mgYoyPp.toFixed(1)+'pp';
+  document.getElementById('cMgYoy').style.color       = mgYoyPp >= 0 ? 'var(--hg)' : 'var(--red)';
 
   // ── YOY BARS ──
   var yoyDiv = document.getElementById('yoyBars');
