@@ -52,14 +52,14 @@ header{display:flex;justify-content:space-between;align-items:center;margin-bott
 
 /* COMPARE BANNER */
 .compare-banner{background:#fff;border:1px solid var(--border);border-radius:16px;margin-bottom:20px;overflow:hidden;box-shadow:0 2px 8px rgba(45,122,95,0.06);}
-.cb-headers{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;border-bottom:2px solid var(--border);}
+.cb-headers{display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr;border-bottom:2px solid var(--border);}
 .cb-head{padding:14px 20px 12px;display:flex;align-items:center;gap:8px;}
 .cb-head:not(:last-child){border-right:1px solid var(--border);}
 .cb-head-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
 .cb-head-label{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;line-height:1.3;}
 .cb-head-year{font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:800;line-height:1;display:block;margin-top:2px;}
 .cb-rows{}
-.cb-row{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;border-bottom:1px solid var(--bg3);}
+.cb-row{display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr;border-bottom:1px solid var(--bg3);}
 .cb-row:last-child{border-bottom:none;}
 .cb-row.cb-divider-row{border-top:2px solid var(--border);background:var(--bg);}
 .cb-row.cb-small .cb-cell-val{font-size:15px!important;}
@@ -105,7 +105,7 @@ canvas{display:block;}
 .ring-wrap{display:flex;flex-direction:column;align-items:center;padding:8px 0 4px;}
 .ring-svg{transform:rotate(-90deg);}
 .ring-center{text-align:center;margin-top:12px;}
-.ring-pct{font-size:30px;font-weight:800;color:var(--hg);letter-spacing:-1px;line-height:1;}
+.ring-pct{font-size:26px;font-weight:800;color:var(--hg);letter-spacing:-1px;line-height:1;}
 .ring-sub{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-top:3px;}
 .margin-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:14px;}
 .margin-mini{background:var(--hgs);border:1px solid var(--hgb);border-radius:10px;padding:12px;text-align:center;}
@@ -178,18 +178,25 @@ header,.compare-banner,.card{animation:fadeUp 0.5s ease both;}
           <span class="cb-head-year" style="color:var(--hg);">2026</span>
         </div>
       </div>
-      <div class="cb-head" style="background:#f5f8ff;">
-        <div class="cb-head-dot" style="background:var(--blue)"></div>
-        <div>
-          <div class="cb-head-label" style="color:var(--blue);">Meta Forecast</div>
-          <span class="cb-head-year" style="color:var(--blue);">FY 2026</span>
-        </div>
-      </div>
       <div class="cb-head" style="background:#fffbf5;">
         <div class="cb-head-dot" style="background:var(--amber)"></div>
         <div>
           <div class="cb-head-label" style="color:var(--amber);">Crescimento</div>
           <span class="cb-head-year" style="color:var(--amber);">YoY</span>
+        </div>
+      </div>
+      <div class="cb-head" style="background:#f5f8ff;">
+        <div class="cb-head-dot" style="background:var(--blue)"></div>
+        <div>
+          <div class="cb-head-label" style="color:var(--blue);">Meta Forecast</div>
+          <span class="cb-head-year" style="color:var(--blue);">2026</span>
+        </div>
+      </div>
+      <div class="cb-head" style="background:#f0fff8;">
+        <div class="cb-head-dot" style="background:var(--hg)"></div>
+        <div>
+          <div class="cb-head-label" style="color:var(--hg);">Real YTD</div>
+          <span class="cb-head-year" style="color:var(--hg);">vs Meta</span>
         </div>
       </div>
     </div>
@@ -201,16 +208,17 @@ header,.compare-banner,.card{animation:fadeUp 0.5s ease both;}
         <div class="cb-cell-val" style="color:var(--text2)" id="c2025GmvFy">—</div>
       </div>
       <div class="cb-cell" style="background:var(--hgs);">
-        <div class="cb-cell-label">GMV Total 2026</div>
+        <div class="cb-cell-val muted">—</div>
+      </div>
+      <div class="cb-cell" style="background:#fffbf5;">
         <div class="cb-cell-val muted">—</div>
       </div>
       <div class="cb-cell" style="background:#f5f8ff;">
-        <div class="cb-cell-label">GMV Meta FY</div>
+        <div class="cb-cell-label">GMV Meta</div>
         <div class="cb-cell-val" style="color:var(--blue)" id="cFcstGmvFy">—</div>
       </div>
-      <div class="cb-cell" style="background:#fffbf5;">
-        <div class="cb-cell-label">GMV Meta vs 2025</div>
-        <div class="cb-cell-val" id="cYoyFy" style="color:var(--amber)">—</div>
+      <div class="cb-cell" style="background:#f0fff8;">
+        <div class="cb-cell-val muted">—</div>
       </div>
     </div>
 
@@ -224,13 +232,17 @@ header,.compare-banner,.card{animation:fadeUp 0.5s ease both;}
         <div class="cb-cell-label">GMV Realizado YTD</div>
         <div class="cb-cell-val" style="color:var(--hg)" id="cRealGmvYtd">—</div>
       </div>
+      <div class="cb-cell" style="background:#fffbf5;">
+        <div class="cb-cell-label">GMV YTD YoY</div>
+        <div class="cb-cell-val" id="cYoyGmv" style="color:var(--hg)">—</div>
+      </div>
       <div class="cb-cell" style="background:#f5f8ff;">
         <div class="cb-cell-label">GMV Meta YTD</div>
         <div class="cb-cell-val" style="color:var(--blue)" id="cFcstGmvYtd">—</div>
       </div>
-      <div class="cb-cell" style="background:#fffbf5;">
-        <div class="cb-cell-label">GMV YTD YoY</div>
-        <div class="cb-cell-val" id="cYoyGmv" style="color:var(--hg)">—</div>
+      <div class="cb-cell" style="background:#f0fff8;">
+        <div class="cb-cell-label">Real YTD vs Meta</div>
+        <div class="cb-cell-val" id="cVsMetaGmv">—</div>
       </div>
     </div>
 
@@ -241,15 +253,16 @@ header,.compare-banner,.card{animation:fadeUp 0.5s ease both;}
         <div class="cb-cell-val" style="color:var(--text2)" id="c2025Ll">—</div>
       </div>
       <div class="cb-cell" style="background:var(--hgs);">
-        <div class="cb-cell-label">LL Total 2026</div>
+        <div class="cb-cell-val muted">—</div>
+      </div>
+      <div class="cb-cell" style="background:#fffbf5;">
         <div class="cb-cell-val muted">—</div>
       </div>
       <div class="cb-cell" style="background:#f5f8ff;">
-        <div class="cb-cell-label">LL Meta FY</div>
+        <div class="cb-cell-label">LL Meta</div>
         <div class="cb-cell-val" style="color:var(--blue)" id="cFcstLlFy">—</div>
       </div>
-      <div class="cb-cell" style="background:#fffbf5;">
-        <div class="cb-cell-label">LL Meta vs 2025</div>
+      <div class="cb-cell" style="background:#f0fff8;">
         <div class="cb-cell-val muted">—</div>
       </div>
     </div>
@@ -264,13 +277,17 @@ header,.compare-banner,.card{animation:fadeUp 0.5s ease both;}
         <div class="cb-cell-label">LL Realizado YTD</div>
         <div class="cb-cell-val" style="color:var(--hg)" id="cRealLlYtd">—</div>
       </div>
+      <div class="cb-cell" style="background:#fffbf5;">
+        <div class="cb-cell-label">LL YTD YoY</div>
+        <div class="cb-cell-val" id="cYoyLl">—</div>
+      </div>
       <div class="cb-cell" style="background:#f5f8ff;">
         <div class="cb-cell-label">LL Meta YTD</div>
         <div class="cb-cell-val" style="color:var(--blue)" id="cFcstLlYtd">—</div>
       </div>
-      <div class="cb-cell" style="background:#fffbf5;">
-        <div class="cb-cell-label">LL YTD YoY</div>
-        <div class="cb-cell-val" id="cYoyLl">—</div>
+      <div class="cb-cell" style="background:#f0fff8;">
+        <div class="cb-cell-label">Real YTD vs Meta</div>
+        <div class="cb-cell-val" id="cVsMetaLl">—</div>
       </div>
     </div>
 
@@ -281,15 +298,16 @@ header,.compare-banner,.card{animation:fadeUp 0.5s ease both;}
         <div class="cb-cell-val sm" style="color:var(--text2)" id="cMg2025Fy">—</div>
       </div>
       <div class="cb-cell" style="background:var(--hgs);">
-        <div class="cb-cell-label">Margem Total 2026</div>
+        <div class="cb-cell-val muted">—</div>
+      </div>
+      <div class="cb-cell" style="background:#fffbf5;">
         <div class="cb-cell-val muted">—</div>
       </div>
       <div class="cb-cell" style="background:#f5f8ff;">
-        <div class="cb-cell-label">Margem Meta FY</div>
+        <div class="cb-cell-label">Margem Meta</div>
         <div class="cb-cell-val sm" style="color:var(--blue)" id="cMgMetaFy">—</div>
       </div>
-      <div class="cb-cell" style="background:#fffbf5;">
-        <div class="cb-cell-label">&nbsp;</div>
+      <div class="cb-cell" style="background:#f0fff8;">
         <div class="cb-cell-val muted">—</div>
       </div>
     </div>
@@ -304,13 +322,17 @@ header,.compare-banner,.card{animation:fadeUp 0.5s ease both;}
         <div class="cb-cell-label">Margem YTD 2026</div>
         <div class="cb-cell-val sm" style="color:var(--hg)" id="cRealMarginYtd">—</div>
       </div>
+      <div class="cb-cell" style="background:#fffbf5;">
+        <div class="cb-cell-label">Margem YoY (p.p.)</div>
+        <div class="cb-cell-val sm" id="cMgYoy">—</div>
+      </div>
       <div class="cb-cell" style="background:#f5f8ff;">
         <div class="cb-cell-label">Margem Meta YTD</div>
         <div class="cb-cell-val sm" style="color:var(--blue)" id="cMgMetaYtd">—</div>
       </div>
-      <div class="cb-cell" style="background:#fffbf5;">
-        <div class="cb-cell-label">Margem YoY (p.p.)</div>
-        <div class="cb-cell-val sm" id="cMgYoy">—</div>
+      <div class="cb-cell" style="background:#f0fff8;">
+        <div class="cb-cell-label">Real YTD vs Meta</div>
+        <div class="cb-cell-val sm" id="cVsMetaMg">—</div>
       </div>
     </div>
   </div>
@@ -327,21 +349,36 @@ header,.compare-banner,.card{animation:fadeUp 0.5s ease both;}
       </div>
       <canvas id="gmvChart" height="195"></canvas>
     </div>
-    <div class="card">
+    <div class="card" style="display:flex;flex-direction:column;">
       <div class="card-header">
-        <div><div class="card-title">YoY GMV por Mês</div><div class="card-sub">2026 REALIZADO VS 2025</div></div>
+        <div><div class="card-title">GMV — Acompanhamento</div><div class="card-sub">REALIZADO VS META FY</div></div>
       </div>
-      <div id="yoyBars"></div>
-      <div class="summary-box">
+      <!-- Ring -->
+      <div style="display:flex;flex-direction:column;align-items:center;padding:8px 0 4px;">
+        <svg class="ring-svg" width="98" height="98" viewBox="0 0 98 98">
+          <circle cx="49" cy="49" r="38.5" fill="none" stroke="#e6efe9" stroke-width="10"/>
+          <circle cx="49" cy="49" r="38.5" fill="none" stroke="url(#rg)" stroke-width="10"
+            stroke-dasharray="241.9" stroke-dashoffset="241.9" stroke-linecap="round" id="progressRing"
+            style="transition:stroke-dashoffset 1.5s cubic-bezier(0.16,1,0.3,1)"/>
+          <defs><linearGradient id="rg" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#3d9e7a"/><stop offset="100%" stop-color="#2d7a5f"/>
+          </linearGradient></defs>
+        </svg>
+        <div class="ring-center"><div class="ring-pct" id="ringPct">0%</div><div class="ring-sub">do forecast anual</div></div>
+      </div>
+      <!-- Summary -->
+      <div class="summary-box" style="margin-top:12px">
+        <div class="summary-row"><span class="summary-label">GMV Realizado</span><span class="summary-val sv-green" id="ringReal">—</span></div>
+        <div class="summary-row"><span class="summary-label">Meta FY</span><span class="summary-val sv-blue" id="ringMeta">—</span></div>
+        <div class="summary-row"><span class="summary-label">Faltam para Meta</span><span class="summary-val sv-blue" id="sumFalta">—</span></div>
         <div class="summary-row"><span class="summary-label">YTD YoY Acumulado</span><span class="summary-val sv-green" id="sumYoy">—</span></div>
         <div class="summary-row"><span class="summary-label">vs Meta YTD</span><span class="summary-val sv-green" id="sumVsMeta">—</span></div>
-        <div class="summary-row"><span class="summary-label">Faltam para Meta FY</span><span class="summary-val sv-blue" id="sumFalta">—</span></div>
-        <div class="summary-row"><span class="summary-label">TACOS médio</span><span class="summary-val" id="sumTacos">8,3%</span></div>
+        <div class="summary-row"><span class="summary-label">Meses realizados</span><span class="summary-val" id="ringMeses">—</span></div>
       </div>
     </div>
   </div>
 
-  <div class="cards-row-3">
+  <div class="cards-row">
     <div class="card">
       <div class="card-header">
         <div><div class="card-title">Margem Líquida %</div><div class="card-sub">META · 2025 · REALIZADO YTD</div></div>
@@ -360,40 +397,24 @@ header,.compare-banner,.card{animation:fadeUp 0.5s ease both;}
     </div>
     <div class="card">
       <div class="card-header">
-        <div><div class="card-title">Lucro Líquido</div><div class="card-sub">FCST VS REALIZADO</div></div>
+        <div><div class="card-title">Lucro Líquido</div><div class="card-sub">META · REALIZADO · 2025</div></div>
+        <div class="legend">
+          <div class="legend-item"><div style="width:14px;height:3px;background:var(--blue);border-radius:2px"></div> Meta</div>
+          <div class="legend-item"><div class="ldot" style="background:var(--hgl)"></div> Realizado</div>
+          <div class="legend-item"><div style="width:14px;height:0;border-top:2px dashed #b0c8bc"></div> 2025</div>
+        </div>
       </div>
       <canvas id="llChart" height="200"></canvas>
       <div class="summary-box" style="margin-top:12px">
-        <div class="summary-row"><span class="summary-label">LL Real YTD</span><span class="summary-val sv-green" id="llRealYtd">—</span></div>
-        <div class="summary-row"><span class="summary-label">LL Meta YTD</span><span class="summary-val sv-blue" id="llMetaYtd">—</span></div>
-        <div class="summary-row"><span class="summary-label">Variação</span><span class="summary-val" id="llVar">—</span></div>
+        <div class="summary-row"><span class="summary-label">LL Realizado YTD</span><span class="summary-val sv-green" id="llRealYtd">—</span></div>
+        <div class="summary-row"><span class="summary-label">LL Meta FY</span><span class="summary-val sv-blue" id="llRingMeta">—</span></div>
+        <div class="summary-row"><span class="summary-label">Faltam para Meta</span><span class="summary-val sv-blue" id="llRingFalta">—</span></div>
+        <div class="summary-row"><span class="summary-label">YTD YoY LL %</span><span class="summary-val" id="llRingYoy">—</span></div>
+        <div class="summary-row"><span class="summary-label">vs Meta LL YTD</span><span class="summary-val" id="llRingVsMeta">—</span></div>
+        <div class="summary-row"><span class="summary-label">Meses realizados</span><span class="summary-val" id="llRingMeses">—</span></div>
       </div>
     </div>
-    <div class="card" style="display:flex;flex-direction:column;align-items:center;">
-      <div class="card-header" style="width:100%">
-        <div><div class="card-title">Avanço da Meta</div><div class="card-sub">REALIZADO / META FY</div></div>
-      </div>
-      <div class="ring-wrap">
-        <svg class="ring-svg" width="140" height="140" viewBox="0 0 140 140">
-          <circle cx="70" cy="70" r="55" fill="none" stroke="#e6efe9" stroke-width="12"/>
-          <circle cx="70" cy="70" r="55" fill="none" stroke="url(#rg)" stroke-width="12"
-            stroke-dasharray="345.4" stroke-dashoffset="345.4" stroke-linecap="round" id="progressRing"
-            style="transition:stroke-dashoffset 1.5s cubic-bezier(0.16,1,0.3,1)"/>
-          <defs><linearGradient id="rg" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stop-color="#3d9e7a"/><stop offset="100%" stop-color="#2d7a5f"/>
-          </linearGradient></defs>
-        </svg>
-        <div class="ring-center"><div class="ring-pct" id="ringPct">0%</div><div class="ring-sub">do forecast anual</div></div>
-      </div>
-      <div style="width:100%;margin-top:8px">
-        <div class="summary-box">
-          <div class="summary-row"><span class="summary-label">Realizado</span><span class="summary-val sv-green" id="ringReal">—</span></div>
-          <div class="summary-row"><span class="summary-label">Meta FY</span><span class="summary-val sv-blue" id="ringMeta">—</span></div>
-          <div class="summary-row"><span class="summary-label">2025 Total</span><span class="summary-val" id="ring2025">—</span></div>
-          <div class="summary-row"><span class="summary-label">Meses</span><span class="summary-val" id="ringMeses">—</span></div>
-        </div>
-      </div>
-    </div>
+
   </div>
 
   <div class="card">
@@ -658,18 +679,23 @@ function buildCharts() {
   });
 
   var lCtx = document.getElementById('llChart').getContext('2d');
+  var gradLL = lCtx.createLinearGradient(0,0,0,220);
+  gradLL.addColorStop(0,'rgba(26,111,181,0.12)');
+  gradLL.addColorStop(1,'rgba(26,111,181,0)');
+
   llChart = new Chart(lCtx, {
     type:'bar',
     data:{labels:MONTHS,datasets:[
-      {label:'LL Meta',data:state.fcstLL,backgroundColor:'rgba(26,111,181,0.18)',borderColor:'#1a6fb5',borderWidth:1.5,borderRadius:4,borderSkipped:false},
-      {label:'LL Real',data:state.realLL,backgroundColor:'rgba(61,158,122,0.75)',borderColor:'#3d9e7a',borderWidth:1,borderRadius:4,borderSkipped:false}
+      {type:'line',label:'Meta',data:state.fcstLL,borderColor:'#1a6fb5',backgroundColor:gradLL,borderWidth:2,pointRadius:0,tension:0.4,fill:true,order:3},
+      {type:'line',label:'2025',data:STATE_2025.ll,borderColor:'#b0c8bc',borderWidth:1.5,borderDash:[5,4],pointRadius:0,tension:0.4,fill:false,order:2},
+      {type:'bar', label:'Realizado',data:state.realLL,backgroundColor:'rgba(61,158,122,0.75)',hoverBackgroundColor:'#3d9e7a',borderRadius:5,borderSkipped:false,order:1}
     ]},
-    options:{responsive:true,
+    options:{responsive:true,interaction:{mode:'index',intersect:false},
       plugins:{legend:{display:false},tooltip:{backgroundColor:'#fff',borderColor:'#d8e8df',borderWidth:1,titleColor:'#3d5a4a',bodyColor:'#1a2e24',padding:12,
-        callbacks:{label:function(ctx){var v=ctx.raw;return !v?ctx.dataset.label+': —':ctx.dataset.label+': '+fmt(v);}}}},
+        callbacks:{label:function(ctx){var v=ctx.raw;return !v?ctx.dataset.label+': —':ctx.dataset.label+': '+fmt(v);}}}},
       scales:{
-        x:{grid:{color:'rgba(216,232,223,0.8)'},ticks:{color:'#7a9a89',font:{size:9}},border:{display:false}},
-        y:{grid:{color:'rgba(216,232,223,0.8)'},ticks:{color:'#7a9a89',callback:function(v){return fmt(v);}},border:{display:false}}
+        x:{grid:{color:'rgba(216,232,223,0.8)',lineWidth:1},ticks:{color:'#7a9a89',font:{size:9}},border:{display:false}},
+        y:{grid:{color:'rgba(216,232,223,0.8)',lineWidth:1},ticks:{color:'#7a9a89',callback:function(v){return fmt(v);}},border:{display:false}}
       }
     }
   });
@@ -717,14 +743,22 @@ function updateUI() {
   // Row 1 — GMV Total
   document.getElementById('c2025GmvFy').textContent   = fmt(STATE_2025.fyGmv);
   document.getElementById('cFcstGmvFy').textContent   = fmt(state.fyFcst);
-  document.getElementById('cYoyFy').textContent       = fmtPct(yoyFy);
-  document.getElementById('cYoyFy').style.color       = yoyFy >= 0 ? 'var(--amber)' : 'var(--red)';
   // Row 2 — GMV YTD
   document.getElementById('c2025GmvYtd').textContent  = fmt(ytd2025);
   document.getElementById('cRealGmvYtd').textContent  = fmt(ytdReal);
   document.getElementById('cFcstGmvYtd').textContent  = fmt(ytdFcstGMV_b);
   document.getElementById('cYoyGmv').textContent      = fmtPct(yoy);
   document.getElementById('cYoyGmv').style.color      = yoy >= 0 ? 'var(--hg)' : 'var(--red)';
+  // Col 5 — Real YTD vs Meta YTD
+  var vsMetaGmv = ytdFcstGMV_b > 0 ? (ytdReal - ytdFcstGMV_b)/ytdFcstGMV_b*100 : 0;
+  document.getElementById('cVsMetaGmv').textContent   = fmtPct(vsMetaGmv);
+  document.getElementById('cVsMetaGmv').style.color   = vsMetaGmv >= 0 ? 'var(--hg)' : 'var(--red)';
+  var vsMetaLl  = ytdFcstLL_b > 0 ? (ytdRealLL - ytdFcstLL_b)/ytdFcstLL_b*100 : 0;
+  document.getElementById('cVsMetaLl').textContent    = fmtPct(vsMetaLl);
+  document.getElementById('cVsMetaLl').style.color    = vsMetaLl >= 0 ? 'var(--hg)' : 'var(--red)';
+  var vsMetaMg  = mgMetaYtd_b > 0 ? avgRealMg - mgMetaYtd_b : 0;
+  document.getElementById('cVsMetaMg').textContent    = (vsMetaMg>=0?'+':'')+vsMetaMg.toFixed(1)+'pp';
+  document.getElementById('cVsMetaMg').style.color    = vsMetaMg >= 0 ? 'var(--hg)' : 'var(--red)';
   // Row 3 — LL Total
   document.getElementById('c2025Ll').textContent      = fmt(STATE_2025.fyLl);
   document.getElementById('cFcstLlFy').textContent    = fmt(state.fyLl);
@@ -745,28 +779,12 @@ function updateUI() {
   document.getElementById('cMgYoy').style.color       = mgYoyPp >= 0 ? 'var(--hg)' : 'var(--red)';
 
   // ── YOY BARS ──
-  var yoyDiv = document.getElementById('yoyBars');
-  yoyDiv.innerHTML = '';
-  for (var i = 0; i < n; i++) {
-    var rv   = state.realGMV[i] || 0;
-    var prev = STATE_2025.gmv[i] || 0;
-    var yp   = prev > 0 ? (rv-prev)/prev*100 : 0;
-    var bw   = Math.min(Math.abs(yp)/2, 100);
-    var col  = yp >= 0 ? '#3d9e7a' : '#dc3545';
-    yoyDiv.innerHTML += '<div class="yoy-item">'
-      +'<div class="yoy-top"><span class="yoy-month">'+MONTHS[i]+' 2026</span>'
-      +'<span class="yoy-pct" style="color:'+col+'">'+fmtPct(yp)+'</span></div>'
-      +'<div class="yoy-detail">'+fmtFull(prev)+' &rarr; '+fmtFull(rv)+'&nbsp;('+(yp>=0?'+':'')+fmtFull(rv-prev)+')</div>'
-      +'<div class="bar-track"><div class="bar-fill" data-w="'+bw+'" style="width:0%;background:'+col+'33;border:1px solid '+col+'44"></div></div>'
-      +'</div>';
-  }
-  setTimeout(function(){ yoyDiv.querySelectorAll('.bar-fill').forEach(function(el){el.style.width=el.dataset.w+'%';}); }, 100);
+  // yoyBars removed
 
   // ── SUMMARIES ──
   document.getElementById('sumYoy').textContent    = fmtPct(yoy);
   document.getElementById('sumVsMeta').textContent = fmtPct(varMeta);
   document.getElementById('sumFalta').textContent  = fmt(state.fyFcst - ytdReal);
-  document.getElementById('sumTacos').textContent  = state.tacos+'%';
 
   document.getElementById('mgMetaFy').textContent  = fyMgFcst.toFixed(1)+'%';
   document.getElementById('mgRealYtd').textContent = avgRealMg.toFixed(1)+'%';
@@ -775,20 +793,22 @@ function updateUI() {
   dEl.textContent = (delta>=0?'+':'')+delta.toFixed(1)+'pp';
   dEl.style.color = delta >= 0 ? 'var(--hg)' : 'var(--red)';
 
-  document.getElementById('llRealYtd').textContent = fmtFull(ytdRealLL);
-  document.getElementById('llMetaYtd').textContent = fmtFull(ytdFcstLL);
-  var llV = ytdRealLL - ytdFcstLL;
-  var llEl = document.getElementById('llVar');
-  llEl.textContent = (llV>=0?'+':'')+fmtFull(llV);
-  llEl.className   = 'summary-val '+(llV>=0?'sv-green':'sv-red');
+  document.getElementById('llRealYtd').textContent   = fmtFull(ytdRealLL);
+  document.getElementById('llRingMeta').textContent  = fmt(state.fyLl);
+  document.getElementById('llRingFalta').textContent = fmt(Math.max(0, state.fyLl - ytdRealLL));
+  document.getElementById('llRingYoy').textContent   = fmtPct(yoyLL);
+  document.getElementById('llRingYoy').style.color   = yoyLL >= 0 ? 'var(--hg)' : 'var(--red)';
+  var llVsMeta = ytdFcstLL_b > 0 ? (ytdRealLL - ytdFcstLL_b)/ytdFcstLL_b*100 : 0;
+  document.getElementById('llRingVsMeta').textContent = fmtPct(llVsMeta);
+  document.getElementById('llRingVsMeta').style.color = llVsMeta >= 0 ? 'var(--hg)' : 'var(--red)';
+  document.getElementById('llRingMeses').textContent  = n+' / 12';
 
   // ── RING ──
   var pct  = state.fyFcst > 0 ? ytdReal/state.fyFcst : 0;
-  var circ = 2*Math.PI*55;
+  var circ = 2*Math.PI*38.5;
   document.getElementById('progressRing').style.strokeDashoffset = circ*(1-pct);
   document.getElementById('ringReal').textContent  = fmtFull(ytdReal);
   document.getElementById('ringMeta').textContent  = fmtFull(state.fyFcst);
-  document.getElementById('ring2025').textContent  = fmtFull(STATE_2025.fyGmv);
   document.getElementById('ringMeses').textContent = n+' / 12';
   var cur = 0, tgt = pct*100;
   clearInterval(window._rt);
