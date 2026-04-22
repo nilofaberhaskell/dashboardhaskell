@@ -381,6 +381,25 @@ header,.compare-banner,.card{animation:fadeUp 0.5s ease both;}
   <div class="cards-row">
     <div class="card">
       <div class="card-header">
+        <div><div class="card-title">Lucro Líquido</div><div class="card-sub">META · REALIZADO · 2025</div></div>
+        <div class="legend">
+          <div class="legend-item"><div style="width:14px;height:3px;background:var(--blue);border-radius:2px"></div> Meta</div>
+          <div class="legend-item"><div class="ldot" style="background:var(--hgl)"></div> Realizado</div>
+          <div class="legend-item"><div style="width:14px;height:0;border-top:2px dashed #b0c8bc"></div> 2025</div>
+        </div>
+      </div>
+      <canvas id="llChart" height="160"></canvas>
+      <div class="summary-box" style="margin-top:12px">
+        <div class="summary-row"><span class="summary-label">LL Realizado YTD</span><span class="summary-val sv-green" id="llRealYtd">—</span></div>
+        <div class="summary-row"><span class="summary-label">LL Meta FY</span><span class="summary-val sv-blue" id="llRingMeta">—</span></div>
+        <div class="summary-row"><span class="summary-label">Faltam para Meta</span><span class="summary-val sv-blue" id="llRingFalta">—</span></div>
+        <div class="summary-row"><span class="summary-label">YTD YoY LL %</span><span class="summary-val" id="llRingYoy">—</span></div>
+        <div class="summary-row"><span class="summary-label">vs Meta LL YTD</span><span class="summary-val" id="llRingVsMeta">—</span></div>
+        <div class="summary-row"><span class="summary-label">Meses realizados</span><span class="summary-val" id="llRingMeses">—</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
         <div><div class="card-title">Margem Líquida %</div><div class="card-sub">META · 2025 · REALIZADO YTD</div></div>
         <div class="legend">
           <div class="legend-item"><div class="ldot" style="background:var(--blue)"></div> Meta</div>
@@ -393,25 +412,6 @@ header,.compare-banner,.card{animation:fadeUp 0.5s ease both;}
         <div class="margin-mini"><div class="margin-mini-label">Meta FY</div><div class="margin-mini-val" id="mgMetaFy" style="color:var(--blue)">—</div></div>
         <div class="margin-mini"><div class="margin-mini-label">Real YTD</div><div class="margin-mini-val" id="mgRealYtd" style="color:var(--amber)">—</div></div>
         <div class="margin-mini"><div class="margin-mini-label">Δ p.p.</div><div class="margin-mini-val" id="mgDelta">—</div></div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-header">
-        <div><div class="card-title">Lucro Líquido</div><div class="card-sub">META · REALIZADO · 2025</div></div>
-        <div class="legend">
-          <div class="legend-item"><div style="width:14px;height:3px;background:var(--blue);border-radius:2px"></div> Meta</div>
-          <div class="legend-item"><div class="ldot" style="background:var(--hgl)"></div> Realizado</div>
-          <div class="legend-item"><div style="width:14px;height:0;border-top:2px dashed #b0c8bc"></div> 2025</div>
-        </div>
-      </div>
-      <canvas id="llChart" height="200"></canvas>
-      <div class="summary-box" style="margin-top:12px">
-        <div class="summary-row"><span class="summary-label">LL Realizado YTD</span><span class="summary-val sv-green" id="llRealYtd">—</span></div>
-        <div class="summary-row"><span class="summary-label">LL Meta FY</span><span class="summary-val sv-blue" id="llRingMeta">—</span></div>
-        <div class="summary-row"><span class="summary-label">Faltam para Meta</span><span class="summary-val sv-blue" id="llRingFalta">—</span></div>
-        <div class="summary-row"><span class="summary-label">YTD YoY LL %</span><span class="summary-val" id="llRingYoy">—</span></div>
-        <div class="summary-row"><span class="summary-label">vs Meta LL YTD</span><span class="summary-val" id="llRingVsMeta">—</span></div>
-        <div class="summary-row"><span class="summary-label">Meses realizados</span><span class="summary-val" id="llRingMeses">—</span></div>
       </div>
     </div>
 
