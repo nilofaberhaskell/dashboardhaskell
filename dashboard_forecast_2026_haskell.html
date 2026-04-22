@@ -433,6 +433,7 @@ header,.compare-banner,.card{animation:fadeUp 0.5s ease both;}
           <th>Mg Meta</th><th>Mg Real</th>
           <th style="color:var(--blue)">LL Meta</th>
           <th style="color:var(--hg)">LL Real</th>
+          <th>Δ LL Meta</th>
           <th style="color:#5a7a6a">LL 2025</th>
           <th>Δ YoY LL</th>
         </tr></thead>
@@ -843,6 +844,10 @@ function updateUI() {
       +'<td class="'+(isR&&rM!==null?'vr':'vm')+'">'+(isR&&rM!==null?rM.toFixed(1)+'%':'—')+'</td>'
       +'<td class="vf">R$'+Math.round(fL).toLocaleString('pt-BR')+'</td>'
       +'<td class="'+(isR&&rL?'vr':'vm')+'">'+(isR&&rL?'R$'+Math.round(rL).toLocaleString('pt-BR'):'—')+'</td>'
+      +(function(){
+        var dLL = isR&&rL&&fL ? (rL-fL)/fL*100 : null;
+        return '<td class="'+(dLL===null?'vm':dLL>=0?'vp':'vn')+'">'+(dLL===null?'\u2014':fmtPct(dLL))+'</td>';
+      })()
       +'<td class="v25">R$'+Math.round(ll25).toLocaleString('pt-BR')+'</td>'
       +'<td class="'+(vLL===null?'vm':vLL>=0?'vp':'vn')+'">'+(vLL===null?'—':fmtPct(vLL))+'</td>'
       +'</tr>';
@@ -862,7 +867,7 @@ function updateUI() {
   var mg2ytd    = ytd2025l > 0 && ytd2025g > 0 ? ytd2025l/ytd2025g*100 : 0;
   var mesesLbl  = n > 0 ? MONTHS.slice(0,n).join('+') : '—';
 
-  tbody.innerHTML += '<tr><td colspan="13" style="padding:0;height:2px;background:linear-gradient(90deg,var(--hgb),transparent)"></td></tr>';
+  tbody.innerHTML += '<tr><td colspan="14" style="padding:0;height:2px;background:linear-gradient(90deg,var(--hgb),transparent)"></td></tr>';
 
   // YTD row
   tbody.innerHTML += '<tr style="background:#f0f9f5">'
@@ -877,6 +882,10 @@ function updateUI() {
     +'<td style="color:var(--amber);font-weight:700">'+avgRealMg.toFixed(1)+'%</td>'
     +'<td class="vf" style="font-weight:700">R$'+Math.round(ytdFL2).toLocaleString('pt-BR')+'</td>'
     +'<td class="vr" style="font-weight:700">R$'+Math.round(tRL).toLocaleString('pt-BR')+'</td>'
+    +(function(){
+      var dLLytd = ytdFL2 > 0 ? (tRL-ytdFL2)/ytdFL2*100 : 0;
+      return '<td class="'+(dLLytd>=0?'vp':'vn')+'" style="font-weight:700">'+fmtPct(dLLytd)+'</td>';
+    })()
     +(function(){
       var vLLytd = ytd2025l > 0 ? (tRL-ytd2025l)/ytd2025l*100 : 0;
       return '<td style="font-weight:700;color:#5a7a6a">R$'+Math.round(ytd2025l).toLocaleString('pt-BR')+'</td>'
@@ -898,6 +907,7 @@ function updateUI() {
     +'<td style="font-weight:700;color:#5a7a6a">R$'+Math.round(STATE_2025.fyLl).toLocaleString('pt-BR')+'</td>'
     +'<td style="font-weight:700;color:#5a7a6a">R$'+Math.round(STATE_2025.fyLl).toLocaleString('pt-BR')+'</td>'
     +'<td class="vm">\u2014</td>'
+    +'<td class="vm">\u2014</td>'
     +'</tr>';
 
   // Meta FY row
@@ -911,6 +921,7 @@ function updateUI() {
     +'<td class="vf">'+fyMgFcst.toFixed(1)+'%</td>'
     +'<td style="color:#5a7a6a">'+mg2025fy.toFixed(1)+'%</td>'
     +'<td class="vf" style="font-weight:700">R$'+Math.round(tFL).toLocaleString('pt-BR')+'</td>'
+    +'<td class="vm">—</td>'
     +'<td class="vm">—</td>'
     +'<td style="color:#5a7a6a">R$'+Math.round(STATE_2025.fyLl).toLocaleString('pt-BR')+'</td>'
     +(function(){
